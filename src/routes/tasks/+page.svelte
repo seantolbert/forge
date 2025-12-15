@@ -1,18 +1,16 @@
 <script lang="ts">
-  import { menuOpen, secondaryMenuOpen, navMenuOpen } from "$lib/stores/menu";
+  import { menuOpen, navMenuOpen, secondaryMenuOpen } from "$lib/stores/menu";
 </script>
 
 <main class="page">
   <section class="content">
-    <h1>Home</h1>
-    <p>This is the home page.</p>
+    <h1>Tasks</h1>
+    <p>Track and manage tasks here.</p>
     <p class="menu-status">Menu is currently {$menuOpen ? "open" : "closed"}.</p>
     <p class="menu-status">
       Secondary menu is currently {$secondaryMenuOpen ? "open" : "closed"}.
     </p>
-    <p class="menu-status">
-      Navigation menu is currently {$navMenuOpen ? "open" : "closed"}.
-    </p>
+    <p class="menu-status">Navigation menu is currently {$navMenuOpen ? "open" : "closed"}.</p>
   </section>
 </main>
 
@@ -46,10 +44,5 @@
 
   .menu-status {
     font-weight: 600;
-  }
-
-  a {
-    color: inherit;
-    text-decoration: underline;
   }
 </style>

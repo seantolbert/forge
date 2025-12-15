@@ -4,8 +4,8 @@
 
 <main class="page">
   <section class="content">
-    <h1>Home</h1>
-    <p>This is the home page.</p>
+    <h1>Settings</h1>
+    <p>Adjust your preferences here.</p>
     <p class="menu-status">Menu is currently {$menuOpen ? "open" : "closed"}.</p>
     <p class="menu-status">
       Secondary menu is currently {$secondaryMenuOpen ? "open" : "closed"}.
@@ -46,10 +46,5 @@
 
   .menu-status {
     font-weight: 600;
-  }
-
-  a {
-    color: inherit;
-    text-decoration: underline;
   }
 </style>

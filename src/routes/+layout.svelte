@@ -1,16 +1,56 @@
 <script lang="ts">
   import favicon from "$lib/assets/favicon.svg";
+  import { goto } from "$app/navigation";
+  import { icons } from "$lib/assets/icons";
   import { FloatingNavButton } from "$lib/components/nav";
-  import { menuOpen, secondaryMenuOpen } from "$lib/stores/menu";
+  import { menuOpen, secondaryMenuOpen, navMenuOpen } from "$lib/stores/menu";
 
   let { children } = $props();
 
   const handleFloatingNavClick = () => {
     menuOpen.update((value) => {
       const next = !value;
-      if (!next) secondaryMenuOpen.set(false);
+      if (!next) {
+        secondaryMenuOpen.set(false);
+        navMenuOpen.set(false);
+      }
       return next;
     });
+  };
+
+ const goToSettings = () => {
+   goto("/settings");
+   menuOpen.set(false);
+   secondaryMenuOpen.set(false);
+   navMenuOpen.set(false);
+ };
+
+ const goToHome = () => {
+   goto("/");
+   menuOpen.set(false);
+   secondaryMenuOpen.set(false);
+   navMenuOpen.set(false);
+ };
+
+  const goToOrders = () => {
+    goto("/orders");
+    menuOpen.set(false);
+    secondaryMenuOpen.set(false);
+    navMenuOpen.set(false);
+  };
+
+  const goToCalendar = () => {
+    goto("/calendar");
+    menuOpen.set(false);
+    secondaryMenuOpen.set(false);
+    navMenuOpen.set(false);
+  };
+
+  const goToTasks = () => {
+    goto("/tasks");
+    menuOpen.set(false);
+    secondaryMenuOpen.set(false);
+    navMenuOpen.set(false);
   };
 </script>
 
@@ -24,49 +64,44 @@
   label="Menu"
   open={$menuOpen}
   secondaryOpen={$secondaryMenuOpen}
+  navOpen={$navMenuOpen}
   on:click={handleFloatingNavClick}
+  on:go-home={goToHome}
+  on:go-settings={goToSettings}
+  on:go-orders={goToOrders}
+  on:go-calendar={goToCalendar}
+  on:go-tasks={goToTasks}
   on:toggle-secondary={(event) => secondaryMenuOpen.set(event.detail.open)}
+  on:toggle-nav={(event) => navMenuOpen.set(event.detail.open)}
 />
 
 <div
   class={`secondary-menu ${$secondaryMenuOpen ? "open" : ""}`}
   aria-hidden={!$secondaryMenuOpen}
 >
-  <button class="secondary-action" type="button" aria-label="Edit">
-    <svg viewBox="0 0 24 24">
-      <path
-        d="M4 17.2V20h2.8L17.4 9.4 15 7 4 17.2Zm13.7-7.5a1 1 0 0 0 0-1.4l-2-2a1 1 0 0 0-1.4 0l-1.4 1.4L16.3 11l1.4-1.3Z"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-    </svg>
+  <button class="secondary-action" type="button" aria-label="Task">
+    {@html icons.task}
   </button>
   <button class="secondary-action" type="button" aria-label="Events">
-    <svg viewBox="0 0 24 24">
-      <path
-        d="M7 3v2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2V3h-2v2H9V3H7Zm12 6H5v10h14V9Zm-3 3h-3v3h3v-3Z"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-    </svg>
+    {@html icons.event}
   </button>
   <button class="secondary-action" type="button" aria-label="Order">
-    <svg viewBox="0 0 24 24">
-      <path
-        d="M7 4h10a2 2 0 0 1 2 2v13l-3-2-3 2-3-2-3 2V6a2 2 0 0 1 2-2Zm2 4h6m-6 4h6"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-    </svg>
+    {@html icons.order}
+  </button>
+</div>
+
+<div
+  class={`navigation-menu ${$navMenuOpen ? "open" : ""}`}
+  aria-hidden={!$navMenuOpen}
+>
+  <button class="secondary-action" type="button" aria-label="Orders" on:click={goToOrders}>
+    {@html icons.order}
+  </button>
+  <button class="secondary-action" type="button" aria-label="Calendar" on:click={goToCalendar}>
+    {@html icons.calendar}
+  </button>
+  <button class="secondary-action" type="button" aria-label="Tasks" on:click={goToTasks}>
+    {@html icons.tasks}
   </button>
 </div>
 
@@ -98,6 +133,35 @@
 
   .secondary-menu.open {
     transform: translateX(-170px);
+    pointer-events: auto;
+  }
+
+  .navigation-menu {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 80px;
+    height: 40%;
+    min-height: 220px;
+    max-height: 320px;
+    background: #9fbe86;
+    border-top-right-radius: 50px;
+    border-top-left-radius: 50px;
+    transform: translateY(150%);
+    transition: transform 550ms cubic-bezier(0.33, 1, 0.53, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: bottom;
+    gap: 12px;
+    padding: 12px 0;
+    color: #0f172a;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .navigation-menu.open {
+    transform: translateY(-30px);
     pointer-events: auto;
   }
 

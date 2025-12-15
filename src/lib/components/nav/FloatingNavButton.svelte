@@ -1,9 +1,16 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
+  import { icons } from "$lib/assets/icons";
 
   const dispatch = createEventDispatcher<{
     click: MouseEvent;
     "toggle-secondary": { open: boolean };
+    "toggle-nav": { open: boolean };
+    "go-home": void;
+    "go-settings": void;
+    "go-orders": void;
+    "go-calendar": void;
+    "go-tasks": void;
   }>();
 
   let {
@@ -12,12 +19,14 @@
     disabled = false,
     open = false,
     secondaryOpen = false,
+    navOpen = false,
   } = $props<{
     label: string;
     size?: "sm" | "md" | "lg";
     disabled?: boolean;
     open?: boolean;
     secondaryOpen?: boolean;
+    navOpen?: boolean;
   }>();
 
   const handleClick = (event: MouseEvent) => {
@@ -28,6 +37,36 @@
   const handlePlusToggle = () => {
     if (!open) return;
     dispatch("toggle-secondary", { open: !secondaryOpen });
+  };
+
+  const handleCalendarToggle = () => {
+    if (!open) return;
+    dispatch("toggle-nav", { open: !navOpen });
+  };
+
+  const handleHome = () => {
+    if (!open) return;
+    dispatch("go-home");
+  };
+
+  const handleSettings = () => {
+    if (!open) return;
+    dispatch("go-settings");
+  };
+
+  const handleOrders = () => {
+    if (!open) return;
+    dispatch("go-orders");
+  };
+
+  const handleCalendar = () => {
+    if (!open) return;
+    dispatch("go-calendar");
+  };
+
+  const handleTasks = () => {
+    if (!open) return;
+    dispatch("go-tasks");
   };
 </script>
 
@@ -47,92 +86,89 @@
 </button>
 
 <button
-  class="icon-button calendar-icon"
+  class="icon-button navigation-icon arrow-rotate"
   class:open
+  class:nav-open={navOpen}
   type="button"
   aria-label="Open calendar"
   aria-hidden={!open}
   disabled={!open}
+  on:click={handleCalendarToggle}
 >
-  <svg viewBox="0 0 24 24">
-    <path
-      d="M9 4h6m-8 4h12m-2-4v4m-8-4v4m-6 0h16v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2Z"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    />
-    <path
-      d="M9 12h6m-6 4h4"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    />
-  </svg>
+  {@html icons.navigation}
 </button>
 
 <button
   class="icon-button plus-icon"
   class:open
+  class:secondary-open={secondaryOpen}
   type="button"
   aria-label="Add"
   aria-hidden={!open}
   disabled={!open}
   on:click={handlePlusToggle}
 >
-  <svg viewBox="0 0 24 24">
-    <path
-      d="M12 5v14m-7-7h14"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    />
-  </svg>
+  {@html icons.pencil}
 </button>
 
 <button
-  class="icon-button tasks-icon"
+  class="icon-button home-icon"
   class:open
   type="button"
-  aria-label="Tasks"
+  aria-label="home"
   aria-hidden={!open}
   disabled={!open}
+  on:click={handleHome}
 >
-  <svg viewBox="0 0 24 24">
-    <path
-      d="M9 5h6v2H9zm-2 2h10a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2Zm2 5h6m-6 3h4m-4-3.5 1.8 1.8 3.8-3.8"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    />
-  </svg>
+  {@html icons.home}
+</button>
+
+<button
+  class="icon-button settings-icon"
+  class:open
+  type="button"
+  aria-label="settings"
+  aria-hidden={!open}
+  disabled={!open}
+  on:click={handleSettings}
+>
+  {@html icons.settings}
 </button>
 
 <button
   class="icon-button orders-icon"
   class:open
   type="button"
-  aria-label="Orders"
+  aria-label="orders"
   aria-hidden={!open}
   disabled={!open}
+  on:click={handleOrders}
 >
-  <svg viewBox="0 0 24 24">
-    <path
-      d="M7 4h10a2 2 0 0 1 2 2v13l-3-2-3 2-3-2-3 2V6a2 2 0 0 1 2-2Zm2 5h6m-6 4h6"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    />
-  </svg>
+  {@html icons.order}
+</button>
+
+<button
+  class="icon-button calendar-icon"
+  class:open
+  type="button"
+  aria-label="calendar"
+  aria-hidden={!open}
+  disabled={!open}
+  on:click={handleCalendar}
+>
+  {@html icons.calendar}
+</button>
+
+<button
+  class="icon-button tasks-icon"
+  class:open
+  type="button"
+  aria-label="tasks"
+  aria-hidden={!open}
+  disabled={!open}
+  on:click={handleTasks}
+>
+  {@html icons.tasks}
 </button>
 
 <style>
@@ -266,7 +302,25 @@
     pointer-events: auto;
   }
 
-  .calendar-icon {
+  .icon-button.arrow-rotate {
+    transition:
+      opacity 420ms ease,
+      transform 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .icon-button.arrow-rotate.open {
+    transform: scale(1);
+  }
+
+  .icon-button.arrow-rotate.nav-open {
+    transform: scale(1) rotate(-90deg);
+  }
+
+  .icon-button.plus-icon.secondary-open {
+    transform: scale(1) rotate(45deg);
+  }
+
+  .navigation-icon {
     right: 18px;
     bottom: 125px;
   }
@@ -276,11 +330,11 @@
     bottom: 16px;
   }
 
-  .tasks-icon {
+  .home-icon {
     right: 70px;
     bottom: 107px;
   }
-  .orders-icon {
+  .settings-icon {
     right: 105px;
     bottom: 60px;
   }
