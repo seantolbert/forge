@@ -1,0 +1,35 @@
+@font-face {
+  font-family: "Urbanist";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/Urbanist/static/Urbanist-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Urbanist";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/Urbanist/static/Urbanist-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Urbanist";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/Urbanist/static/Urbanist-SemiBold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Urbanist";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/Urbanist/static/Urbanist-Bold.ttf") format("truetype");
+}
+
+html {
+  font-family: "Urbanist", system-ui, -apple-system, sans-serif;
+}

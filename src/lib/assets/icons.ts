@@ -11,59 +11,143 @@ export const icons = {
     <path d="M23.2 2.92 21.08 0.8a2.52 2.52 0 0 0 -3.54 0l-1.41 1.42a0.48 0.48 0 0 0 0 0.7l4.95 5a0.48 0.48 0 0 0 0.7 0l1.42 -1.47a2.5 2.5 0 0 0 0 -3.53Z" fill="#000000" stroke-width="1"></path>
   </g>
 </svg>`,
-  settings: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="Cog--Streamline-Ultimate" height="30" width="30">
+  settings: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" id="Interface-Essential-Wrench-2--Streamline-Pixel" height="32" width="32">
   <desc>
-    Cog Streamline Icon: https://streamlinehq.com
+    Interface Essential Wrench 2 Streamline Icon: https://streamlinehq.com
   </desc>
-  <path d="M22.5 9.5h-1.86a9.51 9.51 0 0 0 -0.76 -1.84l1.31 -1.32a1.46 1.46 0 0 0 0.44 -1.06 1.47 1.47 0 0 0 -0.44 -1.06l-1.41 -1.41a1.49 1.49 0 0 0 -2.12 0l-1.32 1.32a9 9 0 0 0 -1.84 -0.77V1.5A1.5 1.5 0 0 0 13 0h-2a1.5 1.5 0 0 0 -1.5 1.5v1.86a9 9 0 0 0 -1.84 0.77L6.34 2.81a1.49 1.49 0 0 0 -2.12 0L2.81 4.22a1.47 1.47 0 0 0 -0.44 1.06 1.44 1.44 0 0 0 0.44 1.06l1.31 1.32a9.51 9.51 0 0 0 -0.76 1.84H1.5A1.5 1.5 0 0 0 0 11v2a1.5 1.5 0 0 0 1.5 1.5h1.86a9.26 9.26 0 0 0 0.76 1.84l-1.31 1.32a1.5 1.5 0 0 0 0 2.12l1.41 1.41a1.53 1.53 0 0 0 2.12 0l1.32 -1.31a9.26 9.26 0 0 0 1.84 0.76v1.86A1.5 1.5 0 0 0 11 24h2a1.5 1.5 0 0 0 1.5 -1.5v-1.86a9.26 9.26 0 0 0 1.84 -0.76l1.32 1.31a1.49 1.49 0 0 0 2.12 0l1.41 -1.41a1.5 1.5 0 0 0 0 -2.12l-1.31 -1.32a9.26 9.26 0 0 0 0.76 -1.84h1.86A1.5 1.5 0 0 0 24 13v-2a1.5 1.5 0 0 0 -1.5 -1.5ZM12 17a5 5 0 1 1 5 -5 5 5 0 0 1 -5 5Z" fill="#000000" stroke-width="1"></path>
-</svg>`,
-  home: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="House-4--Streamline-Ultimate" height="30" width="30">
-  <desc>
-    House 4 Streamline Icon: https://streamlinehq.com
-  </desc>
-  <g id="House-4--Streamline-Ultimate.svg">
-    <path d="m2.64 10.59 9 -7.48a0.48 0.48 0 0 1 0.62 0l9 7.48a1.45 1.45 0 0 0 2.06 -0.22 1.52 1.52 0 0 0 -0.21 -2.11l-9 -7.49a3.41 3.41 0 0 0 -4.32 0l-9 7.49a1.52 1.52 0 0 0 -0.21 2.11 1.45 1.45 0 0 0 2.06 0.22Z" fill="#000000" stroke-width="1"></path>
-    <path d="M22.28 22v-7a2.22 2.22 0 0 0 -0.73 -1.59l-8.3 -7a1.94 1.94 0 0 0 -2.5 0l-8.3 7A2.22 2.22 0 0 0 1.72 15v7a2 2 0 0 0 2 2h5.34a1 1 0 0 0 1 -1v-5.5a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1V23a1 1 0 0 0 1 1h5.38a2 2 0 0 0 1.84 -2Z" fill="#000000" stroke-width="1"></path>
+  <title>interface-essential-wench-2</title>
+  <g>
+    <path d="m30.48 25.9 -1.53 0 0 1.53 3.05 0 0 -6.1 -1.52 0 0 4.57z" fill="#000000" stroke-width="1"></path>
+    <path d="m28.95 4.57 0 1.52 1.53 0 0 4.58 1.52 0 0 -6.1 -3.05 0z" fill="#000000" stroke-width="1"></path>
+    <path d="M28.95 19.81h1.53v1.52h-1.53Z" fill="#000000" stroke-width="1"></path>
+    <path d="M28.95 10.67h1.53v1.52h-1.53Z" fill="#000000" stroke-width="1"></path>
+    <path d="M27.43 24.38h1.52v1.52h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M27.43 6.09h1.52v1.53h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="m22.86 22.86 0 4.57 1.52 0 0 1.52 1.53 0 0 1.53 -4.57 0 0 1.52 7.61 0 0 -3.05 -1.52 0 0 -1.52 -1.52 0 0 -3.05 1.52 0 0 -1.52 -4.57 0z" fill="#000000" stroke-width="1"></path>
+    <path d="M22.86 12.19h6.09v1.52h-6.09Z" fill="#000000" stroke-width="1"></path>
+    <path d="M24.38 3.05h1.53v1.52h-1.53Z" fill="#000000" stroke-width="1"></path>
+    <path d="m22.86 9.14 4.57 0 0 -1.52 -3.05 0 0 -3.05 -1.52 0 0 4.57z" fill="#000000" stroke-width="1"></path>
+    <path d="m25.91 1.52 0 1.53 1.52 0 0 -3.05 -6.09 0 0 1.52 4.57 0z" fill="#000000" stroke-width="1"></path>
+    <path d="M19.81 28.95h1.53v1.53h-1.53Z" fill="#000000" stroke-width="1"></path>
+    <path d="M19.81 19.81h1.53v1.52h-1.53Z" fill="#000000" stroke-width="1"></path>
+    <path d="m19.81 12.19 -1.52 0 0 -3.05 -3.05 0 0 -6.09 -1.52 0 0 -1.53 -1.53 0 0 -1.52 -7.62 0 0 3.05 1.53 0 0 -1.53 4.57 0 0 1.53 1.52 0 0 6.09 1.53 0 0 1.53 1.52 0 0 1.52 1.52 0 0 1.52 1.53 0 0 1.53 1.52 0 0 1.52 1.53 0 0 1.52 1.52 0 0 1.53 6.09 0 0 -1.53 -4.57 0 0 -1.52 -1.52 0 0 -3.05 -3.05 0 0 -1.52z" fill="#000000" stroke-width="1"></path>
+    <path d="M19.81 1.52h1.53v1.53h-1.53Z" fill="#000000" stroke-width="1"></path>
+    <path d="M18.29 22.86h1.52v6.09h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M18.29 18.28h1.52v1.53h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M18.29 3.05h1.52v6.09h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M16.76 21.33h1.53v1.53h-1.53Z" fill="#000000" stroke-width="1"></path>
+    <path d="M16.76 16.76h1.53v1.52h-1.53Z" fill="#000000" stroke-width="1"></path>
+    <path d="M15.24 19.81h1.52v1.52h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M15.24 15.24h1.52v1.52h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M13.72 21.33h1.52v1.53h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M13.72 18.28h1.52v1.53h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M13.72 13.71h1.52v1.53h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M12.19 22.86h1.53v6.09h-1.53Z" fill="#000000" stroke-width="1"></path>
+    <path d="M12.19 16.76h1.53v1.52h-1.53Z" fill="#000000" stroke-width="1"></path>
+    <path d="M12.19 12.19h1.53v1.52h-1.53Z" fill="#000000" stroke-width="1"></path>
+    <path d="M10.67 28.95h1.52v1.53h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M10.67 15.24h1.52v1.52h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M10.67 10.67h1.52v1.52h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M9.15 16.76h1.52v1.52H9.15Z" fill="#000000" stroke-width="1"></path>
+    <path d="M9.15 13.71h1.52v1.53H9.15Z" fill="#000000" stroke-width="1"></path>
+    <path d="m6.1 30.48 0 -1.53 -1.53 0 0 3.05 6.1 0 0 -1.52 -4.57 0z" fill="#000000" stroke-width="1"></path>
+    <path d="m9.15 22.86 -4.58 0 0 1.52 3.05 0 0 3.05 1.53 0 0 -4.57z" fill="#000000" stroke-width="1"></path>
+    <path d="M3.05 12.19h6.1v1.52h-6.1Z" fill="#000000" stroke-width="1"></path>
+    <path d="M6.1 27.43h1.52v1.52H6.1Z" fill="#000000" stroke-width="1"></path>
+    <path d="M6.1 3.05h1.52v1.52H6.1Z" fill="#000000" stroke-width="1"></path>
+    <path d="M3.05 18.28h6.1v1.53h-6.1Z" fill="#000000" stroke-width="1"></path>
+    <path d="m9.15 9.14 0 -4.57 -1.53 0 0 3.05 -3.05 0 0 1.52 4.58 0z" fill="#000000" stroke-width="1"></path>
+    <path d="M3.05 24.38h1.52v1.52H3.05Z" fill="#000000" stroke-width="1"></path>
+    <path d="M3.05 6.09h1.52v1.53H3.05Z" fill="#000000" stroke-width="1"></path>
+    <path d="M1.53 19.81h1.52v1.52H1.53Z" fill="#000000" stroke-width="1"></path>
+    <path d="M1.53 10.67h1.52v1.52H1.53Z" fill="#000000" stroke-width="1"></path>
+    <path d="m1.53 21.33 -1.53 0 0 6.1 3.05 0 0 -1.53 -1.52 0 0 -4.57z" fill="#000000" stroke-width="1"></path>
+    <path d="m1.53 6.09 1.52 0 0 -1.52 -3.05 0 0 6.1 1.53 0 0 -4.58z" fill="#000000" stroke-width="1"></path>
   </g>
 </svg>`,
-  calendar: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="Calendar-3--Streamline-Ultimate" height="30" width="30">
+  home: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" id="Interface-Essential-Home-2--Streamline-Pixel" height="32" width="32">
   <desc>
-    Calendar 3 Streamline Icon: https://streamlinehq.com
+    Interface Essential Home 2 Streamline Icon: https://streamlinehq.com
   </desc>
-  <g id="Calendar-3--Streamline-Ultimate.svg">
-    <path d="M7.5 10.5h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0 -2Z" fill="#000000" stroke-width="1"></path>
-    <path d="M12.5 10.5h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0 -2Z" fill="#000000" stroke-width="1"></path>
-    <path d="M17.5 10.5h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0 -2Z" fill="#000000" stroke-width="1"></path>
-    <path d="M7.5 14.5h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0 -2Z" fill="#000000" stroke-width="1"></path>
-    <path d="M12.5 14.5h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0 -2Z" fill="#000000" stroke-width="1"></path>
-    <path d="M17.5 14.5h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0 -2Z" fill="#000000" stroke-width="1"></path>
-    <path d="M7.5 18.5h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0 -2Z" fill="#000000" stroke-width="1"></path>
-    <path d="M12.5 18.5h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0 -2Z" fill="#000000" stroke-width="1"></path>
-    <path d="M17.5 18.5h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0 -2Z" fill="#000000" stroke-width="1"></path>
-    <path d="M21.5 3h-2.75a0.25 0.25 0 0 1 -0.25 -0.25V1a1 1 0 0 0 -2 0v4.75a0.75 0.75 0 0 1 -1.5 0V3.5a0.5 0.5 0 0 0 -0.5 -0.5H8.25A0.25 0.25 0 0 1 8 2.75V1a1 1 0 0 0 -2 0v4.75a0.75 0.75 0 0 1 -1.5 0V3.5A0.5 0.5 0 0 0 4 3H2.5a2 2 0 0 0 -2 2v17a2 2 0 0 0 2 2h19a2 2 0 0 0 2 -2V5a2 2 0 0 0 -2 -2Zm0 18.5a0.5 0.5 0 0 1 -0.5 0.5H3a0.5 0.5 0 0 1 -0.5 -0.5v-12A0.5 0.5 0 0 1 3 9h18a0.5 0.5 0 0 1 0.5 0.5Z" fill="#000000" stroke-width="1"></path>
+  <title>interface-essential-home-2</title>
+  <g>
+    <path d="m0.765 16.76 3.04 0 0 -1.52 1.53 0 0 -1.53 1.52 0 0 -1.52 1.53 0 0 -1.52 1.52 0 0 -1.53 1.52 0 0 -1.52 1.53 0 0 -1.53 1.52 0 0 -1.52 3.05 0 0 1.52 1.52 0 0 1.53 1.53 0 0 1.52 1.52 0 0 1.53 1.52 0 0 1.52 1.53 0 0 1.52 1.52 0 0 1.53 1.52 0 0 1.52 3.05 0 0 -3.05 -1.52 0 0 -1.52 -1.53 0 0 -1.52 -1.52 0 0 -1.53 -1.52 0 0 -1.52 -1.53 0 0 -1.53 -1.52 0 0 -1.52 -1.52 0 0 -1.52 -1.53 0 0 -1.53 -1.52 0 0 -1.52 -3.05 0 0 1.52 -1.52 0 0 1.53 -1.53 0 0 1.52 -1.52 0 0 1.52 -1.52 0 0 1.53 -1.53 0 0 1.52 -1.52 0 0 1.53 -1.53 0 0 1.52 -1.52 0 0 1.52 -1.52 0 0 3.05z" fill="#000000" stroke-width="1"></path>
+    <path d="m26.665 30.48 -6.09 0 0 -7.62 -1.53 0 0 9.14 9.14 0 0 -13.72 -1.52 0 0 12.2z" fill="#000000" stroke-width="1"></path>
+    <path d="M25.145 16.76h1.52v1.52h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M23.615 15.24h1.53v1.52h-1.53Z" fill="#000000" stroke-width="1"></path>
+    <path d="M22.095 13.71h1.52v1.53h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M20.575 12.19h1.52v1.52h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M19.045 10.67h1.53v1.52h-1.53Z" fill="#000000" stroke-width="1"></path>
+    <path d="M17.525 21.33h1.52v1.53h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M17.525 9.14h1.52v1.53h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M14.475 19.81h3.05v1.52h-3.05Z" fill="#000000" stroke-width="1"></path>
+    <path d="M14.475 7.62h3.05v1.52h-3.05Z" fill="#000000" stroke-width="1"></path>
+    <path d="M12.955 21.33h1.52v1.53h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M12.955 9.14h1.52v1.53h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="m12.955 22.86 -1.53 0 0 7.62 -6.09 0 0 -12.2 -1.53 0 0 13.72 9.15 0 0 -9.14z" fill="#000000" stroke-width="1"></path>
+    <path d="M11.425 10.67h1.53v1.52h-1.53Z" fill="#000000" stroke-width="1"></path>
+    <path d="M9.905 12.19h1.52v1.52h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M8.385 13.71h1.52v1.53h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M6.855 15.24h1.53v1.52h-1.53Z" fill="#000000" stroke-width="1"></path>
+    <path d="M5.335 16.76h1.52v1.52h-1.52Z" fill="#000000" stroke-width="1"></path>
   </g>
 </svg>`,
-  tasks: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="Task-List-Approve--Streamline-Ultimate" height="30" width="30">
+  calendar: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" id="Interface-Essential-Calendar-Appointment--Streamline-Pixel" height="32" width="32">
   <desc>
-    Task List Approve Streamline Icon: https://streamlinehq.com
+    Interface Essential Calendar Appointment Streamline Icon: https://streamlinehq.com
   </desc>
-  <g id="Task-List-Approve--Streamline-Ultimate.svg">
-    <path d="M20.5 2h-5a0.27 0.27 0 0 1 -0.21 -0.12 3.82 3.82 0 0 0 -6.58 0A0.27 0.27 0 0 1 8.5 2h-5A1.5 1.5 0 0 0 2 3.5v19A1.5 1.5 0 0 0 3.5 24h17a1.5 1.5 0 0 0 1.5 -1.5v-19A1.5 1.5 0 0 0 20.5 2ZM19 16.26a2.5 2.5 0 0 1 -0.6 1.63l-1.92 2.24a2.52 2.52 0 0 1 -1.9 0.87H5.5a0.5 0.5 0 0 1 -0.5 -0.5v-15a0.5 0.5 0 0 1 0.5 -0.5h13a0.5 0.5 0 0 1 0.5 0.5Z" fill="#000000" stroke-width="1"></path>
-    <path d="m14.75 8.66 -3.89 5.18a0.24 0.24 0 0 1 -0.37 0l-1.82 -1.79a1.25 1.25 0 0 0 -1.77 1.77L9.07 16a2.32 2.32 0 0 0 3.5 -0.25l4.18 -5.57a1.25 1.25 0 0 0 -2 -1.5Z" fill="#000000" stroke-width="1"></path>
+  <title>interface-essential-calendar-appointment</title>
+  <g>
+    <path d="m2.285 10.67 27.43 0 0 19.81 1.52 0 0 -24.38 -1.52 0 0 3.04 -27.43 0 0 -3.04 -1.52 0 0 24.38 1.52 0 0 -19.81z" fill="#000000" stroke-width="1"></path>
+    <path d="M28.195 4.57h1.52V6.1h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M2.285 30.48h27.43V32H2.285Z" fill="#000000" stroke-width="1"></path>
+    <path d="m25.145 18.29 -3.05 0 0 1.52 -1.52 0 0 -1.52 -3.05 0 0 1.52 -1.52 0 0 3.05 1.52 0 0 1.52 1.52 0 0 1.52 1.53 0 0 1.53 1.52 0 0 -1.53 1.52 0 0 -1.52 1.53 0 0 -1.52 1.52 0 0 -3.05 -1.52 0 0 -1.52z" fill="#000000" stroke-width="1"></path>
+    <path d="M23.615 13.71h1.53v1.53h-1.53Z" fill="#000000" stroke-width="1"></path>
+    <path d="M17.525 13.71h1.52v1.53h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M11.425 25.9h1.53v1.53h-1.53Z" fill="#000000" stroke-width="1"></path>
+    <path d="M11.425 19.81h1.53v1.52h-1.53Z" fill="#000000" stroke-width="1"></path>
+    <path d="M11.425 13.71h1.53v1.53h-1.53Z" fill="#000000" stroke-width="1"></path>
+    <path d="M5.335 25.9h1.52v1.53h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M5.335 19.81h1.52v1.52h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M5.335 13.71h1.52v1.53h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="m8.385 4.57 0 1.53 1.52 0 0 -1.53 12.19 0 0 1.53 1.52 0 0 -1.53 4.58 0 0 -1.52 -4.58 0 0 -3.05 -1.52 0 0 3.05 -12.19 0 0 -3.05 -1.52 0 0 3.05 -4.57 0 0 1.52 4.57 0z" fill="#000000" stroke-width="1"></path>
+    <path d="M2.285 4.57h1.53V6.1h-1.53Z" fill="#000000" stroke-width="1"></path>
   </g>
 </svg>`,
-  orders: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="Design-Tool-Pencil-Ruler--Streamline-Ultimate" height="30" width="30">
+  tasks: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" id="Health-Medical-Notes--Streamline-Pixel" height="32" width="32">
   <desc>
-    Design Tool Pencil Ruler Streamline Icon: https://streamlinehq.com
+    Health Medical Notes Streamline Icon: https://streamlinehq.com
   </desc>
-  <g id="Design-Tool-Pencil-Ruler--Streamline-Ultimate.svg">
-    <path d="M9.3 6a0.25 0.25 0 0 0 0.21 -0.12 0.25 0.25 0 0 0 0 -0.24L7 0.28a0.52 0.52 0 0 0 -0.9 0L3.48 5.64a0.25 0.25 0 0 0 0 0.24 0.25 0.25 0 0 0 0.22 0.12Z" fill="#000000" stroke-width="1"></path>
-    <path d="M3.5 20.25a0.25 0.25 0 0 0 -0.25 0.25v0.25a3.25 3.25 0 0 0 6.5 0v-0.25a0.25 0.25 0 0 0 -0.25 -0.25Z" fill="#000000" stroke-width="1"></path>
-    <path d="M19.25 0h-5a1.5 1.5 0 0 0 -1.5 1.5v1.25A0.25 0.25 0 0 0 13 3h1.75a0.5 0.5 0 0 1 0 1H13a0.25 0.25 0 0 0 -0.25 0.25v2.5A0.25 0.25 0 0 0 13 7h1.75a0.5 0.5 0 0 1 0 1H13a0.25 0.25 0 0 0 -0.25 0.25v2.5A0.25 0.25 0 0 0 13 11h1.75a0.5 0.5 0 0 1 0 1H13a0.25 0.25 0 0 0 -0.25 0.25v2.5A0.25 0.25 0 0 0 13 15h1.75a0.5 0.5 0 0 1 0 1H13a0.25 0.25 0 0 0 -0.25 0.25v6.25a1.5 1.5 0 0 0 1.5 1.5h5a1.5 1.5 0 0 0 1.5 -1.5v-21a1.5 1.5 0 0 0 -1.5 -1.5Zm-2.5 19.5a1.25 1.25 0 1 1 -1.25 1.25 1.25 1.25 0 0 1 1.25 -1.25Z" fill="#000000" stroke-width="1"></path>
-    <g>
-      <path d="M6 7.5a0.5 0.5 0 0 0 -0.5 -0.5h-2a0.25 0.25 0 0 0 -0.25 0.25V19a0.25 0.25 0 0 0 0.25 0.25h2a0.5 0.5 0 0 0 0.5 -0.5Z" fill="#000000" stroke-width="1"></path>
-      <path d="M9.75 7.25A0.25 0.25 0 0 0 9.5 7h-2a0.5 0.5 0 0 0 -0.5 0.5v11.25a0.5 0.5 0 0 0 0.5 0.5h2a0.25 0.25 0 0 0 0.25 -0.25Z" fill="#000000" stroke-width="1"></path>
-    </g>
+  <title>health-medical-notes</title>
+  <g>
+    <path d="M27.425 29.72h1.53V5.33h-1.53V3.81h-6.09V2.29h-3.05v1.52h1.52v1.52H12.2V3.81h1.52V2.29h-3.05v1.52H4.575v1.52h-1.53v24.39h1.53v1.52h22.85Zm-1.52 -1.53H6.1V5.33h4.57v1.53h10.67V5.33h4.57Z" fill="#000000" stroke-width="1"></path>
+    <path d="M12.195 25.14h10.66v1.53h-10.66Z" fill="#000000" stroke-width="1"></path>
+    <path d="M12.195 20.57h10.66v1.53h-10.66Z" fill="#000000" stroke-width="1"></path>
+    <path d="M16.765 11.43h6.09v1.52h-6.09Z" fill="#000000" stroke-width="1"></path>
+    <path d="M13.715 0.76h4.57v1.53h-4.57Z" fill="#000000" stroke-width="1"></path>
+    <path d="M12.195 16h10.66v1.53h-10.66Z" fill="#000000" stroke-width="1"></path>
+    <path d="M9.145 25.14h1.52v1.53h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M9.145 20.57h1.52v1.53h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M9.145 16h1.52v1.53h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="m9.145 14.48 3.05 0 0 -1.53 1.52 0 0 -3.04 -1.52 0 0 -1.53 -3.05 0 0 1.53 -1.53 0 0 3.04 1.53 0 0 1.53z" fill="#000000" stroke-width="1"></path>
+  </g>
+</svg>`,
+  orders: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" id="Social-Rewards-Rating-Star-2--Streamline-Pixel" height="32" width="32">
+  <desc>
+    Social Rewards Rating Star 2 Streamline Icon: https://streamlinehq.com
+  </desc>
+  <title>social-rewards-rating-star-2</title>
+  <g>
+    <path d="M30.48 10.66h-9.15v1.53h-1.52v1.52h-1.52v1.52h-1.53V4.57h1.53V1.52h-1.53V0h-1.52v1.52h-1.53v3.05h-1.52v3.05h-1.52v3.04H1.52v1.53H0v1.52h1.52v1.52h1.53v1.53H6.1v1.52h1.52v3.05h1.52v-1.52h3.05v-1.53h3.05v1.53h-1.53v1.52h-1.52v1.52h-1.52v1.53H9.14v1.52H7.62v1.53H6.1v1.52H4.57v-1.52H3.05v3.04h1.52V32h3.05v-1.53h1.52v-1.52h3.05v-1.52h1.52V25.9h1.53v-1.52h1.52v-4.57h1.53v1.52h1.52v1.52h1.52v1.53h1.53v1.52h1.52v1.53h1.52v3.04h-1.52V32h3.05v-1.53h1.52v-3.04h-1.52v-3.05H25.9v-3.05h-1.52v-3.05h1.52v-1.52h-3.04v1.52h-6.1v-1.52h4.57v-1.53h1.53v-1.52h6.09v1.52h1.53v-1.52H32v-1.52h-1.52Zm-16.77 6.1h-3.04v-1.53H7.62v-1.52H4.57v-1.52h7.62v1.52h1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M25.9 15.23h3.05v1.53H25.9Z" fill="#000000" stroke-width="1"></path>
+    <path d="M22.86 28.95h1.52v1.52h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M19.81 27.43h3.05v1.52h-3.05Z" fill="#000000" stroke-width="1"></path>
+    <path d="M19.81 7.62h1.52v3.04h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M18.29 25.9h1.52v1.53h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M18.29 4.57h1.52v3.05h-1.52Z" fill="#000000" stroke-width="1"></path>
+    <path d="M16.76 24.38h1.53v1.52h-1.53Z" fill="#000000" stroke-width="1"></path>
+    <path d="M6.1 21.33h1.52v3.05H6.1Z" fill="#000000" stroke-width="1"></path>
+    <path d="M4.57 24.38H6.1v3.05H4.57Z" fill="#000000" stroke-width="1"></path>
   </g>
 </svg>`,
   task: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="Notes-Paper-Text--Streamline-Ultimate" height="30" width="30">

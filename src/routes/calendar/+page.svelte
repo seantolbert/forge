@@ -1,16 +1,7 @@
-<script lang="ts">
-  import { menuOpen, navMenuOpen, secondaryMenuOpen } from "$lib/stores/menu";
-</script>
-
 <main class="page">
   <section class="content">
     <h1>Calendar</h1>
     <p>Review your schedule here.</p>
-    <p class="menu-status">Menu is currently {$menuOpen ? "open" : "closed"}.</p>
-    <p class="menu-status">
-      Secondary menu is currently {$secondaryMenuOpen ? "open" : "closed"}.
-    </p>
-    <p class="menu-status">Navigation menu is currently {$navMenuOpen ? "open" : "closed"}.</p>
   </section>
 </main>
 
@@ -18,11 +9,6 @@
   :global(body) {
     margin: 0;
     min-height: 100vh;
-    font-family:
-      "Inter",
-      system-ui,
-      -apple-system,
-      sans-serif;
   }
 
   .page {
@@ -40,9 +26,5 @@
     flex-direction: column;
     gap: 0.5rem;
     max-width: 40rem;
-  }
-
-  .menu-status {
-    font-weight: 600;
   }
 </style>
