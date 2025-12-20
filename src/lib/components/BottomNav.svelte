@@ -36,7 +36,7 @@
     class="nav-indicator"
     style={`transform: translateX(${indicator.left}px); width: ${indicator.width}px;`}
     aria-hidden="true"
-  />
+  ></div>
   {#each navItems as item, index}
     <a
       href={item.href}

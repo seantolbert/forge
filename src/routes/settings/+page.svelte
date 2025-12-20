@@ -1,12 +1,10 @@
 <main class="page">
-  <!-- <section class="content"> -->
   <ul class="tabs group">
     <li class="active"><a href="#one">One</a></li>
     <li><a href="#two">Two</a></li>
     <li><a href="#three">Three</a></li>
     <li><a href="#three">Four</a></li>
   </ul>
-  <!-- </section> -->
 </main>
 
 <style>
@@ -23,13 +21,6 @@
     text-align: center;
     padding: 2rem;
     box-sizing: border-box;
-  }
-
-  .content {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    max-width: 40rem;
   }
 
   .tabs li {

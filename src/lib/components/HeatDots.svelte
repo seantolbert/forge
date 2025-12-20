@@ -5,7 +5,7 @@
 
 <div class="heat" role="img" aria-label={`Heat level ${level} of 5`}>
   {#each dots as isOn, index}
-    <span class={`dot ${isOn ? "on" : ""}`} aria-hidden="true" />
+    <span class={`dot ${isOn ? "on" : ""}`} aria-hidden="true"></span>
   {/each}
 </div>
 

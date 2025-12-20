@@ -19,10 +19,6 @@
 </div>
 
 <style>
-  :global(:root) {
-    /* no globals added; placeholder to keep scope strict */
-  }
-
   .avatar {
     width: var(--avatar-size);
     height: var(--avatar-size);
