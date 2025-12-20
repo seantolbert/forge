@@ -1,9 +1,5 @@
 <script lang="ts">
-  export type SummaryData = {
-    eyebrow?: string;
-    headline?: string;
-    summary: string;
-  };
+  import type { SummaryData } from "./types";
 
   export let data: SummaryData;
 </script>

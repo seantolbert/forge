@@ -1,11 +1,8 @@
 <script lang="ts">
-  import SummaryPanel, {
-    type SummaryData,
-  } from "$lib/components/home/SummaryPanel.svelte";
-  import RecommendationList, {
-    type Recommendation,
-  } from "$lib/components/home/RecommendationList.svelte";
-  import TaskList, { type Task } from "$lib/components/home/TaskList.svelte";
+  import SummaryPanel from "$lib/components/home/SummaryPanel.svelte";
+  import RecommendationList from "$lib/components/home/RecommendationList.svelte";
+  import TaskList from "$lib/components/home/TaskList.svelte";
+  import type { SummaryData, Recommendation, Task } from "$lib/components/home/types";
 
   const CARD_SUMMARY = "summary";
   const CARD_TASKS = "tasks";
@@ -96,6 +93,7 @@
   {#each cardOrder as cardId (cardId)}
     <section
       class={`card glass ${draggingId === cardId ? "dragging" : ""}`}
+      aria-label={`${cardId} panel`}
       on:dragover|preventDefault
       on:drop={(event) => handleDrop(cardId, event)}
     >

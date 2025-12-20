@@ -1,9 +1,5 @@
 <script lang="ts">
-  export type Task = {
-    title: string;
-    status?: "ready" | "blocked" | "in-progress";
-    due?: string;
-  };
+  import type { Task } from "./types";
 
   export let tasks: Task[] = [];
 </script>

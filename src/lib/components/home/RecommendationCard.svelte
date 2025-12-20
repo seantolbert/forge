@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Recommendation } from "./RecommendationList.svelte";
+  import type { Recommendation } from "./types";
 
   export let item: Recommendation;
 </script>

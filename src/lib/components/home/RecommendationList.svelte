@@ -1,13 +1,6 @@
 <script lang="ts">
   import RecommendationCard from "./RecommendationCard.svelte";
-
-  export type Recommendation = {
-    title: string;
-    type: string;
-    length: string;
-    focus: string;
-    accent: string;
-  };
+  import type { Recommendation } from "./types";
 
   export let items: Recommendation[] = [];
 </script>
