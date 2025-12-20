@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rounded-Out Tabs Demo</title>
+    <link rel="stylesheet" href="tabs.css" />
+  </head>
+  <body>
+    <div class="page">
+      <div class="tabs">
+        <ul class="tabs__list" role="tablist">
+          <li class="tabs__tab is-active" role="tab" aria-selected="true" tabindex="0">
+            Tab One
+          </li>
+          <li class="tabs__tab" role="tab" aria-selected="false" tabindex="-1">Tab Two</li>
+          <li class="tabs__tab" role="tab" aria-selected="false" tabindex="-1">Tab Three</li>
+        </ul>
+
+        <div class="tabs__panel" role="tabpanel">
+          <p>
+            This panel shows how the active tab “rounds out” to meet the panel border. Change the
+            variables in <code>tabs.css</code> to tweak radius, colors, and borders.
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
