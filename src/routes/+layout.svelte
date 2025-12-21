@@ -1,6 +1,7 @@
 <script lang="ts">
   import favicon from "$lib/assets/favicon.svg";
   import BottomNav from "$lib/components/BottomNav.svelte";
+  import AddTaskButton from "$lib/components/AddTaskButton.svelte";
   import "$lib/styles/fonts.css";
   let { children } = $props();
 </script>
@@ -12,6 +13,7 @@
 {@render children()}
 
 <BottomNav />
+<AddTaskButton />
 
 <style>
   :global(body) {

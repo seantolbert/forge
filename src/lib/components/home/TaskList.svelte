@@ -2,61 +2,31 @@
   import { onMount } from "svelte";
   import TaskItem from "./TaskItem.svelte";
   import type { Task } from "./types";
+  import {
+    tasksStore,
+    initTasks,
+    markDone,
+    pushToTomorrow,
+    removeTask,
+    nudgeTask,
+  } from "$lib/stores/tasks";
 
   export let tasks: Task[] = [];
   export let limit: number | null = null;
 
-  const STORAGE_KEY = "tasks";
-  let items: Task[] = [];
-  let mounted = false;
   let displayItems: Task[] = [];
 
   onMount(() => {
-    mounted = true;
-    const saved = typeof localStorage !== "undefined" ? localStorage.getItem(STORAGE_KEY) : null;
-    items = saved ? (JSON.parse(saved) as Task[]) : tasks;
-    persist();
+    initTasks(tasks);
   });
 
-  const persist = () => {
-    if (!mounted) return;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-  };
-
-  $: displayItems = limit ? items.slice(0, limit) : items;
-
-  const markDone = (id: string) => {
-    items = items.map((t) => (t.id === id ? { ...t, done: true } : t));
-    persist();
-  };
-
-  const pushTomorrow = (id: string) => {
-    items = items.map((t) => (t.id === id ? { ...t, due: "Tomorrow" } : t));
-    persist();
-  };
-
-  const removeTask = (id: string) => {
-    items = items.filter((t) => t.id !== id);
-    persist();
-  };
-
-  const nudge = (id: string, direction: "up" | "down") => {
-    const idx = items.findIndex((t) => t.id === id);
-    if (idx === -1) return;
-    const targetIdx = direction === "up" ? idx - 1 : idx + 1;
-    if (targetIdx < 0 || targetIdx >= items.length) return;
-    const next = [...items];
-    const [moved] = next.splice(idx, 1);
-    next.splice(targetIdx, 0, moved);
-    items = next;
-    persist();
-  };
+  $: displayItems = limit ? $tasksStore.slice(0, limit) : $tasksStore;
 </script>
 
 <section class="task-list">
   <header class="task-head">
     <h2 class="eyebrow">Tasks</h2>
-    <span class="count">{items.length}</span>
+    <span class="count">{$tasksStore.length}</span>
   </header>
 
   <div class="tasks">
@@ -64,10 +34,10 @@
       <TaskItem
         {task}
         on:done={(e) => markDone(e.detail.id)}
-        on:push={(e) => pushTomorrow(e.detail.id)}
+        on:push={(e) => pushToTomorrow(e.detail.id)}
         on:delete={(e) => removeTask(e.detail.id)}
-        on:nudgeup={(e) => nudge(e.detail.id, "up")}
-        on:nudgedown={(e) => nudge(e.detail.id, "down")}
+        on:nudgeup={(e) => nudgeTask(e.detail.id, "up")}
+        on:nudgedown={(e) => nudgeTask(e.detail.id, "down")}
       />
     {/each}
   </div>
@@ -77,7 +47,6 @@
   .task-list {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
   }
 
   .task-head {

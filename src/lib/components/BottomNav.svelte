@@ -38,6 +38,9 @@
   const handleSelect = (id: string) => {
     activeId = id as NavFilter;
     navFilter.set(activeId === "home" ? null : activeId);
+    if (activeId === "home" && typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
     updateIndicator();
   };
 </script>
@@ -87,7 +90,7 @@
     height: 50px;
     width: 50px;
     background: #9fbe86;
-    border-radius: 50%;
+    /* border-radius: 50%; */
     transition: transform 320ms cubic-bezier(0.33, 1, 0.68, 1);
     z-index: 1;
   }

@@ -10,6 +10,8 @@
     Task,
   } from "$lib/components/home/types";
   import { navFilter } from "$lib/stores/navFilter";
+  import { hiddenWidgets, hideWidget, unhideWidget } from "$lib/stores/hiddenWidgets";
+  import { initTasks } from "$lib/stores/tasks";
 
   const CARD_SUMMARY = "summary";
   const CARD_TASKS = "tasks";
@@ -21,6 +23,8 @@
   let cardOrder = [CARD_SUMMARY, CARD_TASKS, CARD_RECS, CARD_CAL, CARD_ORDERS, CARD_SETTINGS];
   let draggingId: string | null = null;
   let filterId: string | null = null;
+  let hiddenCards = new Set<string>();
+  let menuOpen: Record<string, boolean> = {};
 
   const summary: SummaryData = {
     eyebrow: "Today",
@@ -105,13 +109,40 @@
     draggingId = null;
   };
 
-  $: visibleCards = filterId ? [filterId] : cardOrder;
+  const toggleMenu = (id: string) => {
+    menuOpen = { ...menuOpen, [id]: !menuOpen[id] };
+  };
+
+  const hideCard = (id: string) => {
+    hideWidget(id);
+    menuOpen = { ...menuOpen, [id]: false };
+  };
+
+  const unhideCard = (id: string) => {
+    unhideWidget(id);
+  };
+
+  const closeMenu = (id: string) => {
+    menuOpen = { ...menuOpen, [id]: false };
+  };
+
+  $: visibleCards = (filterId ? [filterId] : cardOrder).filter((id) => filterId === id || !hiddenCards.has(id));
 
   const unsubscribe = navFilter.subscribe((value) => {
     filterId = value;
   });
 
-  onDestroy(() => unsubscribe());
+  const unsubscribeHidden = hiddenWidgets.subscribe((list) => {
+    hiddenCards = new Set(list);
+  });
+
+  onDestroy(() => {
+    unsubscribe();
+    unsubscribeHidden();
+  });
+
+  // seed tasks into store on first load
+  initTasks(tasks);
 </script>
 
 <main class="home">
@@ -121,13 +152,34 @@
 
   {#each visibleCards as cardId, index (cardId)}
     <section
-      class={`card ${index % 2 === 0 ? "glass" : ""} ${draggingId === cardId ? "dragging" : ""} ${filterId && cardId === filterId ? "solo" : ""}`}
+      class={`card ${cardId === CARD_TASKS ? "task-card" : ""} ${index % 2 === 0 ? "glass" : ""} ${draggingId === cardId ? "dragging" : ""} ${filterId && cardId === filterId ? "solo" : ""}`}
       aria-label={`${cardId} panel`}
       on:dragover|preventDefault
       on:drop={(event) => handleDrop(cardId, event)}
       out:fly|local={{ y: 24, duration: 240, easing: (t) => t * t }}
       in:fly|local={{ y: -18, duration: 280, easing: (t) => t * t }}
     >
+      {#if filterId !== cardId}
+        <button class="icon-btn menu-btn" aria-label="Open widget menu" on:click={() => toggleMenu(cardId)}>
+          ...
+        </button>
+      {/if}
+      {#if menuOpen[cardId]}
+        <div class="mini-menu">
+          <button class="mini-btn" type="button" aria-label="Close menu" on:click={() => closeMenu(cardId)}>
+            x
+          </button>
+          <button class="mini-btn" type="button" aria-label="Hide widget" on:click={() => hideCard(cardId)}>
+            hide
+          </button>
+          <button class="mini-btn" type="button" aria-label="Plus action">
+            +
+          </button>
+          <button class="mini-btn" type="button" aria-label="Minus action">
+            -
+          </button>
+        </div>
+      {/if}
       <button
         class="icon-btn move-btn"
         aria-label={`Move ${cardId} card`}
@@ -163,13 +215,37 @@
       {:else if cardId === CARD_SETTINGS}
         <div class="placeholder">
           <p class="eyebrow">Settings</p>
-          <h2>Settings placeholder</h2>
-          <p class="lead">Add profile, preferences, and integrations here.</p>
-          <div class="skeleton-row"></div>
-          <div class="skeleton-row short"></div>
+          <h2>Visibility</h2>
+          <p class="lead">Toggle which widgets show on Home.</p>
+          <div class="switches">
+            {#each [
+              { id: CARD_SUMMARY, label: "Summary" },
+              { id: CARD_TASKS, label: "Tasks" },
+              { id: CARD_RECS, label: "Recommendations" },
+              { id: CARD_CAL, label: "Calendar" },
+              { id: CARD_ORDERS, label: "Orders" },
+              { id: CARD_SETTINGS, label: "Settings" }
+            ] as widget}
+              <label class="switch-row">
+                <span>Show {widget.label}</span>
+                <input
+                  type="checkbox"
+                  checked={!$hiddenWidgets.includes(widget.id)}
+                  on:change={(e) =>
+                    e.currentTarget.checked ? unhideWidget(widget.id) : hideWidget(widget.id)}
+                />
+              </label>
+            {/each}
+          </div>
         </div>
       {/if}
     </section>
+    {#if filterId === cardId && hiddenCards.has(cardId)}
+      <div class="unhide-row">
+        <span>Currently hidden</span>
+        <button class="soft-button ghost" type="button" on:click={() => unhideCard(cardId)}>Unhide</button>
+      </div>
+    {/if}
   {/each}
 
 </main>
@@ -328,6 +404,16 @@
     transform: translateY(-12px);
   }
 
+  .task-card {
+    min-height: auto;
+  }
+
+  .task-card.solo {
+    min-height: auto;
+    padding: 1.1rem 0.85rem;
+    transform: translateY(-8px);
+  }
+
   .placeholder {
     display: flex;
     flex-direction: column;
@@ -355,6 +441,29 @@
     width: 60%;
   }
 
+  .switches {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .switch-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.65rem 0.8rem;
+    border-radius: 12px;
+    gap: 1rem;
+  }
+
+  .switch-row input[type="checkbox"] {
+    width: 42px;
+    height: 24px;
+    accent-color: #9ac8ff;
+  }
+
   @keyframes shimmer {
     0% {
       background-position: -120px 0;
@@ -368,7 +477,6 @@
   .icon-btn {
     position: absolute;
     top: 0.65rem;
-    right: 0.65rem;
     height: 2.2rem;
     width: 2.2rem;
     border-radius: 50%;
@@ -384,6 +492,45 @@
   .icon-btn.move-btn {
     font-weight: 800;
     letter-spacing: 0.08em;
+    right: 0.65rem;
+  }
+
+  .icon-btn.menu-btn {
+    right: 3.2rem;
+    font-weight: 800;
+  }
+
+  .mini-menu {
+    position: absolute;
+    top: 0.5rem;
+    right: 3.1rem;
+    display: flex;
+    gap: 0.4rem;
+    padding: 0.3rem 0.45rem;
+    border-radius: 12px;
+    background: rgba(6, 8, 15, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .mini-btn {
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.06);
+    color: #e6ecff;
+    border-radius: 8px;
+    padding: 0.25rem 0.5rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+  }
+
+  .unhide-row {
+    margin-top: 0.35rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
   }
 
   .card.dragging {
@@ -401,4 +548,4 @@
       min-height: 36vh;
     }
   }
-</style>
+  </style>

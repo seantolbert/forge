@@ -1,10 +1,32 @@
+<script lang="ts">
+  import { hiddenWidgets, hideWidget, unhideWidget } from "$lib/stores/hiddenWidgets";
+
+  const WIDGETS = [
+    { id: "summary", label: "Summary" },
+    { id: "tasks", label: "Tasks" },
+    { id: "recommendations", label: "Recommendations" },
+    { id: "calendar", label: "Calendar" },
+    { id: "orders", label: "Orders" },
+    { id: "settings", label: "Settings" }
+  ];
+</script>
+
 <main class="page">
   <section class="widget">
     <p class="eyebrow">Settings</p>
-    <h1>Settings placeholder</h1>
-    <p class="lead">Add profile, preferences, and integrations here.</p>
-    <div class="skeleton-row"></div>
-    <div class="skeleton-row short"></div>
+    <h1>Visibility</h1>
+    <p class="lead">Toggle which widgets show on Home.</p>
+
+    {#each WIDGETS as widget}
+      <label class="switch-row">
+        <span>Show {widget.label}</span>
+        <input
+          type="checkbox"
+          checked={!$hiddenWidgets.includes(widget.id)}
+          on:change={(e) => (e.currentTarget.checked ? unhideWidget(widget.id) : hideWidget(widget.id))}
+        />
+      </label>
+    {/each}
   </section>
 </main>
 
@@ -36,7 +58,7 @@
     box-shadow: 0 20px 70px rgba(0, 0, 0, 0.35);
     display: flex;
     flex-direction: column;
-    gap: 0.65rem;
+    gap: 0.9rem;
   }
 
   .eyebrow {
@@ -53,27 +75,24 @@
   }
 
   .lead {
-    margin: 0;
+    margin: 0 0 0.25rem;
     color: rgba(230, 236, 255, 0.75);
   }
 
-  .skeleton-row {
-    height: 42px;
+  .switch-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.75rem 0.85rem;
     border-radius: 12px;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06));
-    animation: shimmer 1.6s infinite;
+    gap: 1rem;
   }
 
-  .skeleton-row.short {
-    width: 60%;
-  }
-
-  @keyframes shimmer {
-    0% {
-      background-position: -120px 0;
-    }
-    100% {
-      background-position: 120px 0;
-    }
+  input[type="checkbox"] {
+    width: 42px;
+    height: 24px;
+    accent-color: #9ac8ff;
   }
 </style>
