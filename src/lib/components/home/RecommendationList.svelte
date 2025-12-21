@@ -11,7 +11,6 @@
       <p class="eyebrow">Personal picks</p>
       <h2>Books and podcasts tuned to today</h2>
     </div>
-    <button class="soft-button ghost">Refresh</button>
   </header>
 
   <div class="rail">

@@ -1,24 +1,23 @@
 <script lang="ts">
   import { icons } from "$lib/assets/icons";
-  import { page } from "$app/stores";
   import { onMount, tick } from "svelte";
+  import { navFilter, type NavFilter } from "$lib/stores/navFilter";
 
-  const navItems = [
-    { href: "/", label: "Home", icon: icons.home },
-    { href: "/orders", label: "Orders", icon: icons.orders },
-    { href: "/calendar", label: "Calendar", icon: icons.calendar },
-    { href: "/tasks", label: "Tasks", icon: icons.tasks },
-    { href: "/settings", label: "Settings", icon: icons.settings },
+  const navItems: { id: NavFilter; label: string; icon: string }[] = [
+    { id: "home", label: "Home", icon: icons.home },
+    { id: "orders", label: "Orders", icon: icons.orders },
+    { id: "calendar", label: "Calendar", icon: icons.calendar },
+    { id: "tasks", label: "Tasks", icon: icons.tasks },
+    { id: "settings", label: "Settings", icon: icons.settings },
   ];
 
-  let linkRefs: HTMLAnchorElement[] = [];
+  let linkRefs: HTMLButtonElement[] = [];
   let indicator = { left: 5, width: 40 };
+  let activeId: NavFilter = navItems[0].id;
 
   const updateIndicator = async () => {
     await tick();
-    const index = navItems.findIndex(
-      (item) => item.href === $page.url.pathname
-    );
+    const index = navItems.findIndex((item) => item.id === activeId);
     const el = linkRefs[index];
     if (!el) return;
     const next = { left: el.offsetLeft, width: el.offsetWidth };
@@ -27,8 +26,20 @@
     }
   };
 
-  onMount(updateIndicator);
-  $: $page.url.pathname, updateIndicator();
+  onMount(() => {
+    updateIndicator();
+    const unsubscribe = navFilter.subscribe((value) => {
+      activeId = value ?? "home";
+      updateIndicator();
+    });
+    return unsubscribe;
+  });
+
+  const handleSelect = (id: string) => {
+    activeId = id as NavFilter;
+    navFilter.set(activeId === "home" ? null : activeId);
+    updateIndicator();
+  };
 </script>
 
 <nav class="bottom-nav" aria-label="Primary navigation">
@@ -38,14 +49,16 @@
     aria-hidden="true"
   ></div>
   {#each navItems as item, index}
-    <a
-      href={item.href}
-      class={`nav-link ${$page.url.pathname === item.href ? "active" : ""}`}
-      aria-current={$page.url.pathname === item.href ? "page" : undefined}
+    <button
+      type="button"
+      class={`nav-link ${activeId === item.id ? "active" : ""}`}
+      aria-pressed={activeId === item.id}
       bind:this={linkRefs[index]}
+      on:click={() => handleSelect(item.id)}
     >
       <span class="icon" aria-hidden="true">{@html item.icon}</span>
-    </a>
+      <!-- <span class="sr-only">{item.label}</span> -->
+    </button>
   {/each}
 </nav>
 
@@ -82,7 +95,6 @@
   .nav-link {
     position: relative;
     z-index: 1;
-    text-decoration: none;
     color: inherit;
     display: flex;
     justify-content: center;
@@ -91,7 +103,8 @@
     height: 40px;
     width: 40px;
     padding: 5px;
-    /* background: #0f172a; */
+    background: transparent;
+    border: none;
   }
 
   .nav-link.active {

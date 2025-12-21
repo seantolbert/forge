@@ -1,133 +1,79 @@
 <main class="page">
-  <ul class="tabs group">
-    <li class="active"><a href="#one">One</a></li>
-    <li><a href="#two">Two</a></li>
-    <li><a href="#three">Three</a></li>
-    <li><a href="#three">Four</a></li>
-  </ul>
+  <section class="widget">
+    <p class="eyebrow">Settings</p>
+    <h1>Settings placeholder</h1>
+    <p class="lead">Add profile, preferences, and integrations here.</p>
+    <div class="skeleton-row"></div>
+    <div class="skeleton-row short"></div>
+  </section>
 </main>
 
 <style>
   :global(body) {
     margin: 0;
     min-height: 100vh;
+    background: linear-gradient(145deg, #05060d 0%, #0a0d1a 60%, #06080f 100%);
+    color: #e6ecff;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
 
   .page {
     min-height: 100vh;
     display: flex;
-    /* align-items: center; */
-    /* justify-content: center; */
-    text-align: center;
-    padding: 2rem;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.5rem;
     box-sizing: border-box;
   }
 
-  .tabs li {
-    /* Makes a horizontal row */
-    float: left;
+  .widget {
+    width: 100%;
+    max-width: 480px;
+    padding: 1.4rem;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 20px 70px rgba(0, 0, 0, 0.35);
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
 
-    /* So the psueudo elements can be
-     abs. positioned inside */
-    position: relative;
+  .eyebrow {
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(230, 236, 255, 0.7);
+    margin: 0;
+    font-size: 0.9rem;
   }
-  .tabs a {
-    /* Make them block level
-     and only as wide as they need */
-    float: left;
-    padding: 10px 40px;
-    text-decoration: none;
 
-    /* Default colors */
-    color: black;
-    background: #ddc385;
+  h1 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
 
-    /* Only round the top corners */
-    -webkit-border-top-left-radius: 15px;
-    -webkit-border-top-right-radius: 15px;
-    -moz-border-radius-topleft: 15px;
-    -moz-border-radius-topright: 15px;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
+  .lead {
+    margin: 0;
+    color: rgba(230, 236, 255, 0.75);
   }
-  .tabs .active {
-    /* Highest, active tab is on top */
-    z-index: 3;
-  }
-  .tabs .active a {
-    /* Colors when tab is active */
-    background: white;
-    color: black;
-  }
-  .tabs li:before,
-  .tabs li:after,
-  .tabs li a:before,
-  .tabs li a:after {
-    /* All pseudo elements are 
-     abs. positioned and on bottom */
-    position: absolute;
-    bottom: 0;
-  }
-  /* Only the first, last, and active
-   tabs need pseudo elements at all */
-  .tabs li:last-child:after,
-  .tabs li:last-child a:after,
-  .tabs li:first-child:before,
-  .tabs li:first-child a:before,
-  .tabs .active:after,
-  .tabs .active:before,
-  .tabs .active a:after,
-  .tabs .active a:before {
-    content: "";
-  }
-  .tabs .active:before,
-  .tabs .active:after {
-    background: white;
 
-    /* Squares below circles */
-    z-index: 1;
+  .skeleton-row {
+    height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06));
+    animation: shimmer 1.6s infinite;
   }
-  /* Squares */
-  .tabs li:before,
-  .tabs li:after {
-    background: #ddc385;
-    width: 10px;
-    height: 10px;
-  }
-  .tabs li:before {
-    left: -10px;
-  }
-  .tabs li:after {
-    right: -10px;
-  }
-  /* Circles */
-  .tabs li a:after,
-  .tabs li a:before {
-    width: 20px;
-    height: 20px;
-    /* Circles are circular */
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    background: #222;
 
-    /* Circles over squares */
-    z-index: 2;
+  .skeleton-row.short {
+    width: 60%;
   }
-  .tabs .active a:after,
-  .tabs .active a:before {
-    background: #ddc385;
-  }
-  /* First and last tabs have different
-   outside color needs */
-  .tabs li:first-child.active a:before,
-  .tabs li:last-child.active a:after {
-    background: #222;
-  }
-  .tabs li a:before {
-    left: -20px;
-  }
-  .tabs li a:after {
-    right: -20px;
+
+  @keyframes shimmer {
+    0% {
+      background-position: -120px 0;
+    }
+    100% {
+      background-position: 120px 0;
+    }
   }
 </style>

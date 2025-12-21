@@ -2,14 +2,25 @@
   import SummaryPanel from "$lib/components/home/SummaryPanel.svelte";
   import RecommendationList from "$lib/components/home/RecommendationList.svelte";
   import TaskList from "$lib/components/home/TaskList.svelte";
-  import type { SummaryData, Recommendation, Task } from "$lib/components/home/types";
+  import { fade, fly } from "svelte/transition";
+  import { onDestroy } from "svelte";
+  import type {
+    SummaryData,
+    Recommendation,
+    Task,
+  } from "$lib/components/home/types";
+  import { navFilter } from "$lib/stores/navFilter";
 
   const CARD_SUMMARY = "summary";
   const CARD_TASKS = "tasks";
   const CARD_RECS = "recommendations";
+  const CARD_CAL = "calendar";
+  const CARD_ORDERS = "orders";
+  const CARD_SETTINGS = "settings";
 
-  let cardOrder = [CARD_SUMMARY, CARD_TASKS, CARD_RECS];
+  let cardOrder = [CARD_SUMMARY, CARD_TASKS, CARD_RECS, CARD_CAL, CARD_ORDERS, CARD_SETTINGS];
   let draggingId: string | null = null;
+  let filterId: string | null = null;
 
   const summary: SummaryData = {
     eyebrow: "Today",
@@ -50,10 +61,20 @@
   ];
 
   const tasks: Task[] = [
-    { title: "Send recap to design", status: "ready", due: "11:30" },
-    { title: "Finalize Q3 priorities", status: "in-progress", due: "14:00" },
-    { title: "Schedule sync with ops", status: "blocked", due: "16:00" },
-    { title: "Review draft roadmap", status: "ready", due: "Today" },
+    { id: "t-1", title: "Send recap to design", status: "ready", due: "11:30" },
+    { id: "t-2", title: "Finalize Q3 priorities", status: "in-progress", due: "14:00" },
+    { id: "t-3", title: "Schedule sync with ops", status: "blocked", due: "16:00" },
+    { id: "t-4", title: "Review draft roadmap", status: "ready", due: "Today" },
+    { id: "t-5", title: "Tag inbox to triage", status: "ready", due: "Today" },
+    { id: "t-6", title: "Prep slides for demo", status: "in-progress", due: "Tomorrow" },
+    { id: "t-7", title: "Refine FAQ doc", status: "ready", due: "Thu" },
+    { id: "t-8", title: "Ping vendor on pricing", status: "blocked", due: "Today" },
+    { id: "t-9", title: "Book travel for offsite", status: "ready", due: "Fri" },
+    { id: "t-10", title: "Draft release notes", status: "in-progress", due: "Tomorrow" },
+    { id: "t-11", title: "Clean up Jira board", status: "ready", due: "Today" },
+    { id: "t-12", title: "Approve expenses", status: "ready", due: "Wed" },
+    { id: "t-13", title: "Confirm beta invitees", status: "blocked", due: "Thu" },
+    { id: "t-14", title: "Outline Q4 goals", status: "in-progress", due: "Next Mon" },
   ];
 
   const swapCards = (sourceId: string, targetId: string) => {
@@ -83,6 +104,14 @@
   const handleDragEnd = () => {
     draggingId = null;
   };
+
+  $: visibleCards = filterId ? [filterId] : cardOrder;
+
+  const unsubscribe = navFilter.subscribe((value) => {
+    filterId = value;
+  });
+
+  onDestroy(() => unsubscribe());
 </script>
 
 <main class="home">
@@ -90,12 +119,14 @@
   <div class="glow glow-b"></div>
   <div class="glow glow-c"></div>
 
-  {#each cardOrder as cardId (cardId)}
+  {#each visibleCards as cardId, index (cardId)}
     <section
-      class={`card glass ${draggingId === cardId ? "dragging" : ""}`}
+      class={`card ${index % 2 === 0 ? "glass" : ""} ${draggingId === cardId ? "dragging" : ""} ${filterId && cardId === filterId ? "solo" : ""}`}
       aria-label={`${cardId} panel`}
       on:dragover|preventDefault
       on:drop={(event) => handleDrop(cardId, event)}
+      out:fly|local={{ y: 24, duration: 240, easing: (t) => t * t }}
+      in:fly|local={{ y: -18, duration: 280, easing: (t) => t * t }}
     >
       <button
         class="icon-btn move-btn"
@@ -110,12 +141,37 @@
       {#if cardId === CARD_SUMMARY}
         <SummaryPanel data={summary} />
       {:else if cardId === CARD_TASKS}
-        <TaskList {tasks} />
+        <TaskList tasks={tasks} limit={filterId === CARD_TASKS ? null : 3} />
       {:else if cardId === CARD_RECS}
         <RecommendationList items={recommendations} />
+      {:else if cardId === CARD_CAL}
+        <div class="placeholder">
+          <p class="eyebrow">Calendar</p>
+          <h2>Timeline placeholder</h2>
+          <p class="lead">Drop your schedule, meetings, and focus blocks here.</p>
+          <div class="skeleton-row"></div>
+          <div class="skeleton-row short"></div>
+        </div>
+      {:else if cardId === CARD_ORDERS}
+        <div class="placeholder">
+          <p class="eyebrow">Orders</p>
+          <h2>Order pipeline placeholder</h2>
+          <p class="lead">Show incoming orders, status chips, and actions here.</p>
+          <div class="skeleton-row"></div>
+          <div class="skeleton-row short"></div>
+        </div>
+      {:else if cardId === CARD_SETTINGS}
+        <div class="placeholder">
+          <p class="eyebrow">Settings</p>
+          <h2>Settings placeholder</h2>
+          <p class="lead">Add profile, preferences, and integrations here.</p>
+          <div class="skeleton-row"></div>
+          <div class="skeleton-row short"></div>
+        </div>
       {/if}
     </section>
   {/each}
+
 </main>
 
 <style>
@@ -259,7 +315,55 @@
     flex-direction: column;
     gap: 0.85rem;
     position: relative;
+    min-height: 32vh;
+    transition:
+      transform 240ms ease,
+      min-height 260ms ease,
+      padding 220ms ease;
   }
+
+  .card.solo {
+    min-height: calc(100vh - 3.5rem);
+    padding: 1.4rem 1.1rem;
+    transform: translateY(-12px);
+  }
+
+  .placeholder {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .placeholder h2 {
+    margin: 0;
+    font-size: 1.3rem;
+  }
+
+  .lead {
+    margin: 0;
+    color: rgba(230, 236, 255, 0.75);
+  }
+
+  .skeleton-row {
+    height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06));
+    animation: shimmer 1.6s infinite;
+  }
+
+  .skeleton-row.short {
+    width: 60%;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -120px 0;
+    }
+    100% {
+      background-position: 120px 0;
+    }
+  }
+
 
   .icon-btn {
     position: absolute;
@@ -268,12 +372,12 @@
     height: 2.2rem;
     width: 2.2rem;
     border-radius: 50%;
-    /* border: 1px solid rgba(255, 255, 255, 0.12); */
-    /* background: rgba(255, 255, 255, 0.06); */
-    color: #e6ecff;
+    border: none;
+    background: transparent;
+    color: rgba(230, 236, 255, 0.8);
     display: grid;
     place-items: center;
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+    box-shadow: none;
     cursor: pointer;
   }
 

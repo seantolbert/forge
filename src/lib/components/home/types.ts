@@ -13,7 +13,9 @@ export type Recommendation = {
 };
 
 export type Task = {
+  id: string;
   title: string;
   status?: "ready" | "blocked" | "in-progress";
   due?: string;
+  done?: boolean;
 };
