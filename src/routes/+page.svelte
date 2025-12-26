@@ -5,13 +5,13 @@
   import CalendarMonth from "$lib/components/home/CalendarMonth.svelte";
   import OrdersList from "$lib/components/home/OrdersList.svelte";
   import { fade, fly } from "svelte/transition";
-  import { onDestroy } from "svelte";
+  import { onDestroy, onMount } from "svelte";
   import type {
     SummaryData,
     Recommendation,
   } from "$lib/components/home/types";
   import { navFilter } from "$lib/stores/navFilter";
-  import { hiddenWidgets, hideWidget, unhideWidget } from "$lib/stores/hiddenWidgets";
+  import { hiddenWidgets, hideWidget, unhideWidget, initHiddenWidgets } from "$lib/stores/hiddenWidgets";
 
   const CARD_SUMMARY = "summary";
   const CARD_TASKS = "tasks";
@@ -182,6 +182,10 @@
 
   const unsubscribeHidden = hiddenWidgets.subscribe((list) => {
     hiddenCards = new Set(list);
+  });
+
+  onMount(() => {
+    initHiddenWidgets();
   });
 
   onDestroy(() => {
