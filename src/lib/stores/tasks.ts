@@ -1,61 +1,81 @@
 import { writable } from "svelte/store";
 import type { Task } from "$lib/components/home/types";
+import { supabase } from "$lib/supabaseClient";
 
-const STORAGE_KEY = "tasks";
-const isBrowser = typeof localStorage !== "undefined";
+export const tasksStore = writable<Task[]>([]);
 
-const load = (): Task[] => {
-  if (!isBrowser) return [];
-  const raw = localStorage.getItem(STORAGE_KEY);
-  if (!raw) return [];
-  try {
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch (_e) {
-    return [];
+const sameDay = (a: Date, b: Date) =>
+  a.getFullYear() === b.getFullYear() &&
+  a.getMonth() === b.getMonth() &&
+  a.getDate() === b.getDate();
+
+const formatDueLabel = (iso: string) => {
+  const date = new Date(iso);
+  const today = new Date();
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  if (sameDay(date, today)) return "Today";
+  if (sameDay(date, tomorrow)) return "Tomorrow";
+  return date.toLocaleDateString("default", { month: "short", day: "numeric" });
+};
+
+const mapRowToTask = (row: any): Task => ({
+  id: row.id,
+  title: row.title,
+  status: row.status ?? "todo",
+  due: row.due_at ? formatDueLabel(row.due_at) : undefined,
+  done: row.status === "done"
+});
+
+export const loadTasks = async () => {
+  const { data, error } = await supabase
+    .from("tasks")
+    .select("*")
+    .order("created_at", { ascending: false });
+  if (error) {
+    console.error("Failed to load tasks", error);
+    return { error };
   }
+  tasksStore.set(data.map(mapRowToTask));
+  return { data };
 };
 
-export const tasksStore = writable<Task[]>(load());
-
-const persist = (value: Task[]) => {
-  if (!isBrowser) return;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(value));
+export const markDone = async (id: string) => {
+  const { error } = await supabase
+    .from("tasks")
+    .update({ status: "done" })
+    .eq("id", id);
+  if (error) {
+    console.error("Failed to mark done", error);
+    return;
+  }
+  tasksStore.update((list) =>
+    list.map((t) => (t.id === id ? { ...t, status: "done", done: true } : t))
+  );
 };
 
-tasksStore.subscribe((value) => persist(value));
-
-export const initTasks = (defaults: Task[]) => {
-  tasksStore.update((current) => {
-    if (current.length) return current;
-    persist(defaults);
-    return defaults;
-  });
+export const pushToTomorrow = async (id: string) => {
+  const newDate = new Date();
+  newDate.setDate(newDate.getDate() + 1);
+  const { error } = await supabase
+    .from("tasks")
+    .update({ due_at: newDate.toISOString() })
+    .eq("id", id);
+  if (error) {
+    console.error("Failed to push task", error);
+    return;
+  }
+  tasksStore.update((list) =>
+    list.map((t) => (t.id === id ? { ...t, due: "Tomorrow" } : t))
+  );
 };
 
-const nextId = () => `t-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-
-export const addTask = (title: string) => {
-  if (!title.trim()) return;
-  const newTask: Task = {
-    id: nextId(),
-    title: title.trim(),
-    status: "ready",
-    due: "Today",
-    done: false
-  };
-  tasksStore.update((list) => [newTask, ...list]);
-};
-
-export const markDone = (id: string) => {
-  tasksStore.update((list) => list.map((t) => (t.id === id ? { ...t, done: true } : t)));
-};
-
-export const pushToTomorrow = (id: string) => {
-  tasksStore.update((list) => list.map((t) => (t.id === id ? { ...t, due: "Tomorrow" } : t)));
-};
-
-export const removeTask = (id: string) => {
+export const removeTask = async (id: string) => {
+  const { error } = await supabase.from("tasks").delete().eq("id", id);
+  if (error) {
+    console.error("Failed to delete task", error);
+    return;
+  }
   tasksStore.update((list) => list.filter((t) => t.id !== id));
 };
 

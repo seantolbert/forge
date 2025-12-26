@@ -15,7 +15,16 @@ export type Recommendation = {
 export type Task = {
   id: string;
   title: string;
-  status?: "ready" | "blocked" | "in-progress";
+  status?: "todo" | "blocked" | "done";
   due?: string;
   done?: boolean;
+};
+
+export type Project = {
+  id: string;
+  name: string;
+  summary?: string | null;
+  status?: string | null;
+  created_at?: string;
+  due_at?: string | null;
 };

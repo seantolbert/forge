@@ -4,20 +4,23 @@
   import type { Task } from "./types";
   import {
     tasksStore,
-    initTasks,
     markDone,
     pushToTomorrow,
     removeTask,
     nudgeTask,
+    loadTasks
   } from "$lib/stores/tasks";
 
-  export let tasks: Task[] = [];
   export let limit: number | null = null;
 
   let displayItems: Task[] = [];
+  let loadError = "";
 
-  onMount(() => {
-    initTasks(tasks);
+  onMount(async () => {
+    const { error } = await loadTasks();
+    if (error) {
+      loadError = "Unable to load tasks right now.";
+    }
   });
 
   $: displayItems = limit ? $tasksStore.slice(0, limit) : $tasksStore;
@@ -28,6 +31,10 @@
     <h2 class="eyebrow">Tasks</h2>
     <span class="count">{$tasksStore.length}</span>
   </header>
+
+  {#if loadError}
+    <p class="error">{loadError}</p>
+  {/if}
 
   <div class="tasks">
     {#each displayItems as task (task.id)}
@@ -65,6 +72,12 @@
     text-align: center;
     padding: 0.35rem 0.5rem;
     border-radius: 999px;
+    font-weight: 700;
+  }
+
+  .error {
+    margin: 0.25rem 0 0.35rem;
+    color: #ff90c2;
     font-weight: 700;
   }
 

@@ -66,7 +66,7 @@
 </script>
 
 <article
-  class={`task ${task.done ? "done" : ""} ${task.status ?? "ready"}`}
+  class={`task ${task.done ? "done" : ""} ${task.status ?? "todo"}`}
   ontouchstart={handleTouchStart}
   ontouchmove={handleTouchMove}
   ontouchend={handleTouchEnd}
@@ -100,16 +100,16 @@
     transition: transform 160ms ease, opacity 160ms ease, background 160ms ease;
   }
 
-  .task.ready .stripe {
+  .task.todo .stripe {
     background: linear-gradient(120deg, #b6ffda, #5ee2a0);
-  }
-
-  .task.in-progress .stripe {
-    background: linear-gradient(120deg, #b9d5ff, #6fc8ff);
   }
 
   .task.blocked .stripe {
     background: linear-gradient(120deg, #ff90c2, #ff5e8a);
+  }
+
+  .task.done .stripe {
+    background: linear-gradient(120deg, #f4f7ff, #d6e3ff);
   }
 
   .stripe {

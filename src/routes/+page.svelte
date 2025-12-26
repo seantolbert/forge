@@ -2,16 +2,16 @@
   import SummaryPanel from "$lib/components/home/SummaryPanel.svelte";
   import RecommendationList from "$lib/components/home/RecommendationList.svelte";
   import TaskList from "$lib/components/home/TaskList.svelte";
+  import CalendarMonth from "$lib/components/home/CalendarMonth.svelte";
+  import OrdersList from "$lib/components/home/OrdersList.svelte";
   import { fade, fly } from "svelte/transition";
   import { onDestroy } from "svelte";
   import type {
     SummaryData,
     Recommendation,
-    Task,
   } from "$lib/components/home/types";
   import { navFilter } from "$lib/stores/navFilter";
   import { hiddenWidgets, hideWidget, unhideWidget } from "$lib/stores/hiddenWidgets";
-  import { initTasks } from "$lib/stores/tasks";
 
   const CARD_SUMMARY = "summary";
   const CARD_TASKS = "tasks";
@@ -64,21 +64,69 @@
     },
   ];
 
-  const tasks: Task[] = [
-    { id: "t-1", title: "Send recap to design", status: "ready", due: "11:30" },
-    { id: "t-2", title: "Finalize Q3 priorities", status: "in-progress", due: "14:00" },
-    { id: "t-3", title: "Schedule sync with ops", status: "blocked", due: "16:00" },
-    { id: "t-4", title: "Review draft roadmap", status: "ready", due: "Today" },
-    { id: "t-5", title: "Tag inbox to triage", status: "ready", due: "Today" },
-    { id: "t-6", title: "Prep slides for demo", status: "in-progress", due: "Tomorrow" },
-    { id: "t-7", title: "Refine FAQ doc", status: "ready", due: "Thu" },
-    { id: "t-8", title: "Ping vendor on pricing", status: "blocked", due: "Today" },
-    { id: "t-9", title: "Book travel for offsite", status: "ready", due: "Fri" },
-    { id: "t-10", title: "Draft release notes", status: "in-progress", due: "Tomorrow" },
-    { id: "t-11", title: "Clean up Jira board", status: "ready", due: "Today" },
-    { id: "t-12", title: "Approve expenses", status: "ready", due: "Wed" },
-    { id: "t-13", title: "Confirm beta invitees", status: "blocked", due: "Thu" },
-    { id: "t-14", title: "Outline Q4 goals", status: "in-progress", due: "Next Mon" },
+  const todayDate = new Date();
+  const currentYear = todayDate.getFullYear();
+  const currentMonth = todayDate.getMonth();
+  const daysInCurrentMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+  const pad = (value: number) => String(value).padStart(2, "0");
+  const todayKey = `${currentYear}-${pad(currentMonth + 1)}-${pad(todayDate.getDate())}`;
+  const toDateKey = (day: number) =>
+    `${currentYear}-${pad(currentMonth + 1)}-${pad(Math.min(Math.max(day, 1), daysInCurrentMonth))}`;
+  let selectedDate = todayKey;
+
+  const calendarEvents = [
+    { date: toDateKey(todayDate.getDate()), label: "Today" },
+    { date: toDateKey(todayDate.getDate()), label: "Budget review" },
+    { date: toDateKey(todayDate.getDate()), label: "Ops sync" },
+    { date: toDateKey(todayDate.getDate()), label: "UX handoff" },
+    { date: toDateKey(todayDate.getDate()), label: "Client check-in" },
+    { date: toDateKey(todayDate.getDate()), label: "Marketing retro" },
+    { date: toDateKey(todayDate.getDate() + 2), label: "Workshop" },
+    { date: toDateKey(todayDate.getDate() + 5), label: "Demo" },
+    { date: toDateKey(8), label: "Ops review" },
+    { date: toDateKey(15), label: "Release" }
+  ];
+  const formatDateLabel = (iso: string) =>
+    new Date(iso).toLocaleDateString("default", { month: "short", day: "numeric" });
+  $: activeDate = selectedDate || todayKey;
+  $: selectedEvents = calendarEvents.filter((event) => event.date.slice(0, 10) === activeDate);
+  $: selectedDateLabel = formatDateLabel(activeDate);
+
+  const orders = [
+    {
+      id: "o-1",
+      title: "Handcrafted mug",
+      note: "Buyer asked for gift wrap",
+      source: "Etsy",
+      createdAt: new Date(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate() - 1).toISOString(),
+      stage: "processing",
+      image: "https://images.unsplash.com/photo-1523419400521-211b4c577c17?auto=format&fit=crop&w=400&q=60"
+    },
+    {
+      id: "o-2",
+      title: "Vintage camera strap",
+      note: "Ship with tracking",
+      source: "eBay",
+      createdAt: new Date(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate() - 3).toISOString(),
+      stage: "shipped"
+    },
+    {
+      id: "o-3",
+      title: "Accent lamp",
+      note: "Local pickup",
+      source: "Facebook Marketplace",
+      createdAt: new Date(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate() - 7).toISOString(),
+      stage: "packed",
+      image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=400&q=60"
+    },
+    {
+      id: "o-4",
+      title: "Custom poster",
+      note: "Awaiting payment confirmation",
+      source: "Shopify",
+      createdAt: new Date(todayDate.getFullYear(), todayDate.getMonth(), todayDate.getDate()).toISOString(),
+      stage: "new"
+    }
   ];
 
   const swapCards = (sourceId: string, targetId: string) => {
@@ -140,9 +188,6 @@
     unsubscribe();
     unsubscribeHidden();
   });
-
-  // seed tasks into store on first load
-  initTasks(tasks);
 </script>
 
 <main class="home">
@@ -152,7 +197,7 @@
 
   {#each visibleCards as cardId, index (cardId)}
     <section
-      class={`card ${cardId === CARD_TASKS ? "task-card" : ""} ${index % 2 === 0 ? "glass" : ""} ${draggingId === cardId ? "dragging" : ""} ${filterId && cardId === filterId ? "solo" : ""}`}
+      class={`card ${cardId === CARD_TASKS ? "task-card" : ""} ${index % 2 === 1 ? "glass" : ""} ${draggingId === cardId ? "dragging" : ""} ${filterId && cardId === filterId ? "solo" : ""}`}
       aria-label={`${cardId} panel`}
       on:dragover|preventDefault
       on:drop={(event) => handleDrop(cardId, event)}
@@ -193,25 +238,29 @@
       {#if cardId === CARD_SUMMARY}
         <SummaryPanel data={summary} />
       {:else if cardId === CARD_TASKS}
-        <TaskList tasks={tasks} limit={filterId === CARD_TASKS ? null : 3} />
+        <TaskList limit={filterId === CARD_TASKS ? null : 3} />
       {:else if cardId === CARD_RECS}
         <RecommendationList items={recommendations} />
       {:else if cardId === CARD_CAL}
-        <div class="placeholder">
-          <p class="eyebrow">Calendar</p>
-          <h2>Timeline placeholder</h2>
-          <p class="lead">Drop your schedule, meetings, and focus blocks here.</p>
-          <div class="skeleton-row"></div>
-          <div class="skeleton-row short"></div>
-        </div>
+        <CalendarMonth events={calendarEvents} bind:selectedDate />
+        {#if filterId === CARD_CAL}
+          <div class="event-list">
+            <p class="event-label">Events for {selectedDateLabel}</p>
+            {#if selectedEvents.length}
+              {#each selectedEvents as event (event.date + event.label)}
+                <div class="event-row">
+                  <span class="dot"></span>
+                  <span class="event-title">{event.label || "Untitled event"}</span>
+                  <span class="event-date">{event.date}</span>
+                </div>
+              {/each}
+            {:else}
+              <p class="muted">No events this day</p>
+            {/if}
+          </div>
+        {/if}
       {:else if cardId === CARD_ORDERS}
-        <div class="placeholder">
-          <p class="eyebrow">Orders</p>
-          <h2>Order pipeline placeholder</h2>
-          <p class="lead">Show incoming orders, status chips, and actions here.</p>
-          <div class="skeleton-row"></div>
-          <div class="skeleton-row short"></div>
-        </div>
+        <OrdersList orders={orders} />
       {:else if cardId === CARD_SETTINGS}
         <div class="placeholder">
           <p class="eyebrow">Settings</p>
@@ -531,6 +580,48 @@
     align-items: center;
     gap: 0.5rem;
     justify-content: center;
+  }
+
+  .event-list {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .event-label {
+    margin: 0;
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: rgba(230, 236, 255, 0.65);
+  }
+
+  .event-row {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.45rem 0.35rem;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .event-row .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: linear-gradient(120deg, #f4f7ff, #d6e3ff);
+    box-shadow: 0 0 0 3px rgba(214, 227, 255, 0.2);
+  }
+
+  .event-title {
+    font-weight: 700;
+  }
+
+  .event-date {
+    margin-left: auto;
+    color: rgba(230, 236, 255, 0.65);
+    font-size: 0.95rem;
   }
 
   .card.dragging {
