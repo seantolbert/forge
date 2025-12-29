@@ -206,6 +206,12 @@ body {
   accent-color: #9ac8ff;
 }
 
+.success {
+  margin: 0.35rem 0 0;
+  color: #7fffb0;
+  font-weight: 700;
+}
+
 @keyframes shimmer {
   0% {
     background-position: -120px 0;
