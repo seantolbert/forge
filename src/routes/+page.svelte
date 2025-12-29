@@ -8,6 +8,7 @@
   import OrdersList from "$lib/components/home/OrdersList.svelte";
   import CardShell from "$lib/components/home/CardShell.svelte";
   import HomeVisibilityPanel from "$lib/components/home/HomeVisibilityPanel.svelte";
+  import NotificationPrompt from "$lib/components/home/NotificationPrompt.svelte";
   import {
     calendarEvents,
     CARD_IDS,
@@ -123,6 +124,8 @@
   <div class="glow glow-a"></div>
   <div class="glow glow-b"></div>
   <div class="glow glow-c"></div>
+
+  <NotificationPrompt />
 
   {#each visibleCards as cardId, index (cardId)}
     <CardShell
