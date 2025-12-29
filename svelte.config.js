@@ -8,7 +8,10 @@ const config = {
 	preprocess: vitePreprocess(),
 
 	kit: {
-		adapter: adapter()
+		adapter: adapter({
+			// Force a supported Node runtime for Vercel builds
+			runtime: 'nodejs22.x'
+		})
 	}
 };
 
