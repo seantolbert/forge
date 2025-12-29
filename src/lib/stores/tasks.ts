@@ -24,13 +24,22 @@ const mapRowToTask = (row: any): Task => ({
   title: row.title,
   status: row.status ?? "todo",
   due: row.due_at ? formatDueLabel(row.due_at) : undefined,
-  done: row.status === "done"
+  dueAt: row.due_at ?? null,
+  done: row.status === "done",
+  notes: row.notes ?? null,
+  url: row.url ?? null,
+  frequency: row.frequency ?? null,
+  notify: row.notify ?? null,
+  createEvent: row.create_event ?? null,
+  projectId: row.project_id ?? null,
+  projectColor: row.projects?.color ?? row.project?.color ?? row.project_color ?? null,
+  linkedOrders: row.linked_orders ?? null
 });
 
 export const loadTasks = async () => {
   const { data, error } = await supabase
     .from("tasks")
-    .select("*")
+    .select("*, projects(color)")
     .order("created_at", { ascending: false });
   if (error) {
     console.error("Failed to load tasks", error);
@@ -51,6 +60,20 @@ export const markDone = async (id: string) => {
   }
   tasksStore.update((list) =>
     list.map((t) => (t.id === id ? { ...t, status: "done", done: true } : t))
+  );
+};
+
+export const markTodo = async (id: string) => {
+  const { error } = await supabase
+    .from("tasks")
+    .update({ status: "todo" })
+    .eq("id", id);
+  if (error) {
+    console.error("Failed to mark todo", error);
+    return;
+  }
+  tasksStore.update((list) =>
+    list.map((t) => (t.id === id ? { ...t, status: "todo", done: false } : t))
   );
 };
 

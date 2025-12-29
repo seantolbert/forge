@@ -1,8 +1,9 @@
 <script lang="ts">
   import AddTaskSheet from "./AddTaskSheet.svelte";
   import AddOrderSheet from "./AddOrderSheet.svelte";
+  import AddProjectSheet from "./AddProjectSheet.svelte";
 
-  type SheetType = "task" | "order" | null;
+  type SheetType = "task" | "order" | "project" | null;
 
   let menuOpen = false;
   let activeSheet: SheetType = null;
@@ -20,6 +21,7 @@
 <div class="adder">
   <AddTaskSheet open={activeSheet === "task"} onClose={closeSheet} />
   <AddOrderSheet open={activeSheet === "order"} onClose={closeSheet} />
+  <AddProjectSheet open={activeSheet === "project"} onClose={closeSheet} />
 
   {#if menuOpen}
     <div class="mini-menu">
@@ -27,6 +29,7 @@
       <div class="menu-actions">
         <button class="mini-btn" type="button" on:click={() => openSheet("task")}>Task</button>
         <button class="mini-btn" type="button" on:click={() => openSheet("order")}>Order</button>
+        <button class="mini-btn" type="button" on:click={() => openSheet("project")}>Project</button>
       </div>
     </div>
   {/if}

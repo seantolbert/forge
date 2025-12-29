@@ -17,7 +17,16 @@ export type Task = {
   title: string;
   status?: "todo" | "blocked" | "done";
   due?: string;
+  dueAt?: string | null;
   done?: boolean;
+  notes?: string | null;
+  url?: string | null;
+  frequency?: string | null;
+  notify?: boolean | null;
+  createEvent?: boolean | null;
+  projectId?: string | null;
+  projectColor?: string | null;
+  linkedOrders?: string | null;
 };
 
 export type Project = {
@@ -27,4 +36,5 @@ export type Project = {
   status?: string | null;
   created_at?: string;
   due_at?: string | null;
+  color?: string | null;
 };

@@ -2,9 +2,11 @@
   import { onMount } from "svelte";
   import TaskItem from "./TaskItem.svelte";
   import type { Task } from "./types";
+  import AddTaskSheet from "../AddTaskSheet.svelte";
   import {
     tasksStore,
     markDone,
+    markTodo,
     pushToTomorrow,
     removeTask,
     nudgeTask,
@@ -15,6 +17,7 @@
 
   let displayItems: Task[] = [];
   let loadError = "";
+  let editingTask: Task | null = null;
 
   onMount(async () => {
     const { error } = await loadTasks();
@@ -24,9 +27,19 @@
   });
 
   $: displayItems = limit ? $tasksStore.slice(0, limit) : $tasksStore;
+
+  const toggleComplete = (id: string, isDone: boolean | undefined) => {
+    if (isDone) {
+      markTodo(id);
+    } else {
+      markDone(id);
+    }
+  };
 </script>
 
 <section class="task-list">
+  <AddTaskSheet open={!!editingTask} task={editingTask} onClose={() => (editingTask = null)} />
+
   <header class="task-head">
     <h2 class="eyebrow">Tasks</h2>
     <span class="count">{$tasksStore.length}</span>
@@ -40,11 +53,12 @@
     {#each displayItems as task (task.id)}
       <TaskItem
         {task}
-        on:done={(e) => markDone(e.detail.id)}
+        on:done={(e) => toggleComplete(e.detail.id, e.detail.done)}
         on:push={(e) => pushToTomorrow(e.detail.id)}
         on:delete={(e) => removeTask(e.detail.id)}
         on:nudgeup={(e) => nudgeTask(e.detail.id, "up")}
         on:nudgedown={(e) => nudgeTask(e.detail.id, "down")}
+        on:open={(e) => (editingTask = e.detail.task)}
       />
     {/each}
   </div>

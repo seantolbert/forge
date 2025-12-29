@@ -44,7 +44,7 @@
     // Horizontal gestures first
     if (absX > absY) {
       if (dx > 80) {
-        dispatch("done", { id: task.id });
+        dispatch("done", { id: task.id, done: task.done });
       } else if (dx < -140) {
         dispatch("delete", { id: task.id });
       } else if (dx < -60) {
@@ -63,6 +63,17 @@
 
     resetPosition();
   };
+
+  const openTask = () => {
+    dispatch("open", { task });
+  };
+
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openTask();
+    }
+  };
 </script>
 
 <article
@@ -70,7 +81,11 @@
   ontouchstart={handleTouchStart}
   ontouchmove={handleTouchMove}
   ontouchend={handleTouchEnd}
-  style={`transform: translateX(${translateX}px);`}
+  style={`transform: translateX(${translateX}px); --stripe-color: ${task.projectColor || ""};`}
+  role="button"
+  tabindex="0"
+  onclick={openTask}
+  onkeydown={handleKeyDown}
 >
   <div class="stripe"></div>
   <div class={`checkbox ${task.done ? "checked" : ""}`} aria-hidden="true">
@@ -84,13 +99,12 @@
       <p class="meta">Due {task.due}</p>
     {/if}
   </div>
-  <button class="soft-button tiny" disabled>Open</button>
 </article>
 
 <style>
   .task {
     display: grid;
-    grid-template-columns: 4px 18px 1fr auto;
+    grid-template-columns: 4px 18px 1fr;
     gap: 0.65rem;
     align-items: center;
     padding: 0.55rem 0.35rem;
@@ -101,15 +115,15 @@
   }
 
   .task.todo .stripe {
-    background: linear-gradient(120deg, #b6ffda, #5ee2a0);
+    background: var(--stripe-color, linear-gradient(120deg, #b6ffda, #5ee2a0));
   }
 
   .task.blocked .stripe {
-    background: linear-gradient(120deg, #ff90c2, #ff5e8a);
+    background: var(--stripe-color, linear-gradient(120deg, #ff90c2, #ff5e8a));
   }
 
   .task.done .stripe {
-    background: linear-gradient(120deg, #f4f7ff, #d6e3ff);
+    background: var(--stripe-color, linear-gradient(120deg, #f4f7ff, #d6e3ff));
   }
 
   .stripe {

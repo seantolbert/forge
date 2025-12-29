@@ -17,7 +17,7 @@ export const loadProjects = async () => {
   return { data };
 };
 
-export const createProject = async (name: string, summary?: string, dueAt?: string) => {
+export const createProject = async (name: string, summary?: string, dueAt?: string, color?: string) => {
   if (!name.trim()) return { error: new Error("Name required") };
   const { data, error } = await supabase
     .from("projects")
@@ -25,6 +25,7 @@ export const createProject = async (name: string, summary?: string, dueAt?: stri
       name: name.trim(),
       summary: summary?.trim() || null,
       due_at: dueAt || null,
+      color: color || null,
       status: "active"
     })
     .select()
