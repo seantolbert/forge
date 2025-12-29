@@ -37,12 +37,21 @@
           body,
           icon: "/icons/pwa-192.png",
           badge: "/icons/pwa-192.png",
-          tag: "test-push"
+          tag: "test-push",
+          renotify: true
         });
-      } else {
-        // Fallback to a direct Notification API call.
-        new Notification(title, { body });
+        testStatus = "Test notification sent via service worker. Check your notification shade.";
+        return;
       }
+
+      if (!registration) {
+        testError =
+          "Service worker not ready yet. Wait a few seconds after load or reload the app, then try again.";
+        return;
+      }
+
+      // Fallback to a direct Notification API call.
+      new Notification(title, { body });
 
       testStatus = "Test notification sent. Check your notification shade.";
     } catch (err) {
