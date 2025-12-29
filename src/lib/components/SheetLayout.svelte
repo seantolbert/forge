@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { browser } from "$app/environment";
   import { createEventDispatcher, onDestroy, onMount } from "svelte";
 
   export let open = false;
@@ -30,10 +31,12 @@
   };
 
   onMount(() => {
+    if (!browser) return;
     window.addEventListener("keydown", handleEscape);
   });
 
   onDestroy(() => {
+    if (!browser) return;
     window.removeEventListener("keydown", handleEscape);
   });
   $: hasActions = Boolean($$slots.actions);
