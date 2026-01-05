@@ -4,11 +4,11 @@
   import { navFilter, type NavFilter } from "$lib/stores/navFilter";
 
   const navItems: { id: NavFilter; label: string; icon: string }[] = [
-    { id: "home", label: "Home", icon: icons.home },
-    { id: "orders", label: "Orders", icon: icons.orders },
-    { id: "calendar", label: "Calendar", icon: icons.calendar },
-    { id: "tasks", label: "Tasks", icon: icons.tasks },
-    { id: "settings", label: "Settings", icon: icons.settings },
+    { id: "all", label: "All tasks", icon: icons.home },
+    { id: "daily", label: "Daily", icon: icons.daily },
+    { id: "weekly", label: "Weekly", icon: icons.weekly },
+    { id: "monthly", label: "Monthly", icon: icons.monthly },
+    { id: "projects", label: "Projects", icon: icons.projects },
   ];
 
   let linkRefs: HTMLButtonElement[] = [];
@@ -29,7 +29,7 @@
   onMount(() => {
     updateIndicator();
     const unsubscribe = navFilter.subscribe((value) => {
-      activeId = value ?? "home";
+      activeId = value;
       updateIndicator();
     });
     return unsubscribe;
@@ -37,10 +37,7 @@
 
   const handleSelect = (id: string) => {
     activeId = id as NavFilter;
-    navFilter.set(activeId === "home" ? null : activeId);
-    if (activeId === "home" && typeof window !== "undefined") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+    navFilter.set(activeId);
     updateIndicator();
   };
 </script>

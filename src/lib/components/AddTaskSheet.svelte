@@ -1,151 +1,86 @@
 <script lang="ts">
-  import SheetLayout from "./SheetLayout.svelte";
-  import TaskFormFields from "./TaskFormFields.svelte";
-  import { loadTasks } from "$lib/stores/tasks";
-  import { createTask, updateTask } from "$lib/api/tasks";
-  import { onMount, onDestroy } from "svelte";
-  import type { Task } from "$lib/components/home/types";
-  import {
-    createTaskForm,
-    taskFormDefaults,
-    type TaskFormState,
-  } from "$lib/hooks/useTaskForm";
-  import { useProjects } from "$lib/hooks/useProjects";
-
-  // Controls sheet visibility, closing handler, and optional task to edit.
   export let open = false;
   export let onClose: () => void;
-  export let task: Task | null = null;
+  export let task: unknown = null;
 
-  // Form state managed by helper; UI toggles.
-  const form = createTaskForm();
-  let formState: TaskFormState = { ...taskFormDefaults };
-  const unsubscribeForm = form.state.subscribe((value) => (formState = value));
-  let showProjectForm = false;
-  let submitting = false;
-  let submitError = "";
-  let projectError = "";
-  let currentTaskId: string | null = null;
-  // Used to tie footer submit to the form element.
-  const formId = "task-form";
-  const projects = useProjects();
-  const { projectsStore } = projects;
-
-  // Convert ISO to datetime-local value respecting local TZ offset.
-  // Clears local form state (used on submit success and close).
-  const resetForm = () => {
-    form.reset();
-    showProjectForm = false;
-    submitting = false;
-    submitError = "";
-    projectError = "";
-    currentTaskId = null;
-  };
-
-  // Pre-fills fields when editing an existing task.
-  const populateFromTask = (selected: Task) => {
-    currentTaskId = selected.id;
-    form.fromTask(selected);
-  };
-
-  // Reactive edit flag based on provided task.
-  $: isEditing = Boolean(task);
-
-  // When opened with a new task, populate fields; when cleared, reset.
-  $: if (open && task && task.id !== currentTaskId) {
-    populateFromTask(task);
-  } else if (open && !task && currentTaskId) {
-    resetForm();
-  }
-
-  // Load projects once when the sheet mounts to populate the selector.
-  onMount(async () => {
-    await projects.load();
-    projectError = projects.error;
-  });
-  onDestroy(() => {
-    unsubscribeForm();
-  });
-
-  // Create or update a task, then refresh the task list and close.
-  const handleSubmit = async (event: SubmitEvent) => {
-    event.preventDefault();
-    if (!formState.title.trim()) return;
-    submitting = true;
-    submitError = "";
-    const payload = form.toPayload();
-
-    const { error } =
-      isEditing && currentTaskId
-        ? await updateTask(currentTaskId, payload)
-        : await createTask(payload);
-
-    submitting = false;
-    if (error) {
-      submitError = isEditing
-        ? "Could not update task. Please try again."
-        : "Could not add task. Please try again.";
-      console.error(error);
-      return;
-    }
-    resetForm();
-    await loadTasks();
-    onClose();
-  };
-
-  // Local close that also resets form state.
   const handleClose = () => {
-    resetForm();
-    onClose();
+    onClose?.();
   };
 </script>
 
-<SheetLayout
-  {open}
-  aria-label={isEditing ? "Edit task" : "Add task"}
-  eyebrow={isEditing ? "Update" : "Create"}
-  title={isEditing ? "Edit task" : "New task"}
-  subtitle="Tasks can include notes, linked orders, and optional reminders."
-  closeLabel={isEditing ? "Close edit task" : "Close add task"}
-  onClose={handleClose}
->
-  <form class="task-form" id={formId} on:submit={handleSubmit}>
-    <TaskFormFields
-      state={formState}
-      onChange={(next) => form.setState(next)}
-      projects={$projectsStore}
-      bind:showProjectForm
-      {projectError}
-      on:projectSelected={({ detail }) =>
-        form.setState({ projectId: detail.id ?? "" })}
-    />
-    {#if submitError}
-      <p class="error">{submitError}</p>
-    {/if}
-  </form>
-  <svelte:fragment slot="actions">
-    <button
-      type="button"
-      class="ghost"
-      on:click={handleClose}
-      disabled={submitting}>Cancel</button
-    >
-    <button type="submit" class="primary" form={formId} disabled={submitting}>
-      {submitting
-        ? isEditing
-          ? "Saving..."
-          : "Adding..."
-        : isEditing
-          ? "Save changes"
-          : "Add task"}
-    </button>
-  </svelte:fragment>
-</SheetLayout>
+<div class={`drawer-shell ${open ? "open" : ""}`} aria-hidden={!open}>
+  <div class="overlay" on:click={handleClose}></div>
+  <div class="drawer" role="dialog" aria-label="Task drawer">
+    <button class="close-btn" aria-label="Close" type="button" on:click={handleClose}>X</button>
+    <div class="content">
+      <!-- Empty body; ready for future fields -->
+    </div>
+  </div>
+</div>
 
-<style lang="postcss">
-  .task-form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+<style>
+  .drawer-shell {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    transition: opacity 200ms ease;
+  }
+
+  .drawer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(820px, 100vw);
+    background: #0f172a;
+    color: #e6ecff;
+    border-radius: 16px 0 0 16px;
+    box-shadow: -26px 0 80px rgba(0, 0, 0, 0.5);
+    padding: 1.5rem 1.25rem 2rem;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: transform 240ms ease, opacity 200ms ease;
+    overflow-y: auto;
+  }
+
+  .drawer-shell.open {
+    pointer-events: auto;
+  }
+
+  .drawer-shell.open .overlay {
+    opacity: 1;
+  }
+
+  .drawer-shell.open .drawer {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: #e6ecff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .content {
+    margin-top: 2.5rem;
+    min-height: 40vh;
   }
 </style>

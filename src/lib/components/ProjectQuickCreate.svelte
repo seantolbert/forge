@@ -43,7 +43,7 @@
           placeholder="Project name"
           bind:value={projectName}
           autocomplete="off"
-          required
+          aria-required="true"
         />
       </Field>
       <Field label="Summary">

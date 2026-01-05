@@ -1,5 +1,5 @@
 import { writable } from "svelte/store";
 
-export type NavFilter = "home" | "orders" | "calendar" | "tasks" | "settings" | "recommendations" | "summary";
+export type NavFilter = "all" | "daily" | "weekly" | "monthly" | "projects";
 
-export const navFilter = writable<NavFilter | null>(null);
+export const navFilter = writable<NavFilter>("all");

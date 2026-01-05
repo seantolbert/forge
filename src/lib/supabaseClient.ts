@@ -17,10 +17,10 @@ const createMockClient = () => {
     order: () => result,
     eq: () => result,
     single: () => result,
-    upsert: () => result
+    upsert: () => result,
   };
   return {
-    from: () => builder
+    from: () => builder,
   };
 };
 
@@ -31,4 +31,6 @@ if (!supabaseUrl || !supabaseAnonKey) {
 }
 
 export const supabase =
-  supabaseUrl && supabaseAnonKey ? createClient(supabaseUrl, supabaseAnonKey) : createMockClient();
+  supabaseUrl && supabaseAnonKey
+    ? createClient(supabaseUrl, supabaseAnonKey)
+    : createMockClient();

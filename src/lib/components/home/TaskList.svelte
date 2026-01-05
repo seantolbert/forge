@@ -12,8 +12,10 @@
     nudgeTask,
     loadTasks
   } from "$lib/stores/tasks";
+  import type { NavFilter } from "$lib/stores/navFilter";
 
   export let limit: number | null = null;
+  export let filter: NavFilter = "all";
 
   let displayItems: Task[] = [];
   let loadError = "";
@@ -26,7 +28,17 @@
     }
   });
 
-  $: displayItems = limit ? $tasksStore.slice(0, limit) : $tasksStore;
+  const matchesFilter = (task: Task) => {
+    if (filter === "all") return true;
+    if (filter === "projects") return true;
+    const freq = (task.frequency || "").toLowerCase();
+    return freq === filter;
+  };
+
+  $: {
+    const filtered = $tasksStore.filter(matchesFilter);
+    displayItems = limit ? filtered.slice(0, limit) : filtered;
+  }
 
   const toggleComplete = (id: string, isDone: boolean | undefined) => {
     if (isDone) {
@@ -42,7 +54,7 @@
 
   <header class="task-head">
     <h2 class="eyebrow">Tasks</h2>
-    <span class="count">{$tasksStore.length}</span>
+    <span class="count">{displayItems.length}</span>
   </header>
 
   {#if loadError}
